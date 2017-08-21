@@ -1,0 +1,737 @@
+ÖÂÃü´íÎó:  ËøÎÄ¼þ "postmaster.pid" ÒÑ¾­´æÔÚ
+ÌáÊ¾:  ÊÇ·ñÆäËü postmaster (PID 2388) ÔËÐÐÔÚÊý¾ÝÄ¿Â¼ "D:/odoo11/runtime/pgsql/data"?
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-16 20:49:06 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/14EC720 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 20:56:50 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+´íÎó:  ÓÉÓÚÓÃ»§ÇëÇó¶øÕýÔÚÈ¡Ïû²éÑ¯
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 21:01:17 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 21:03:42 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+æ—¥å¿—:  æ— æ³•ä»Žå®¢æˆ·ç«¯èŽ·å¾—æ•°æ®: An existing connection was forcibly closed by the remote host.
+	
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 21:04:42 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 21:05:32 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 21:19:19 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 22:37:58 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 22:44:42 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+´íÎó:  ÓÉÓÚÓÃ»§ÇëÇó¶øÕýÔÚÈ¡Ïû²éÑ¯
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-16 23:29:41 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 9600) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  autovacuumÆô¶¯½ø³Ì (PID 520) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+^CÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-16 23:30:15 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/5198300 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 10:02:02 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v11" ²»´æÔÚ
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 10068) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 7400) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-17 10:16:55 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/51F7D78 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 11:28:39 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 12:00:16 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 10512) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-17 12:00:51 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  redo ÔÚ 0/14ECA80 ¿ªÊ¼
+ÈÕÖ¾:  0/23033A8 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  redo ÔÚ 0/23032C8 Íê³É
+ÈÕÖ¾:  ÉÏÒ»´ÎÍê³ÉÊÂÎñÊÇÔÚÈÕÖ¾Ê±¼ä2017-08-17 12:02:20.164799+08Íê³ÉµÄ.
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 12:07:27 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+é”™è¯¯:  æ— æ³•åœ¨å…³ç³» "ir_cron"ä¸­çš„è®°å½•ä¸ŠèŽ·å¾—é”
+è¯­å¥:  SELECT *
+	                                   FROM ir_cron
+	                                   WHERE numbercall != 0
+	                                      AND active
+	                                      AND nextcall <= (now() at time zone 'UTC')
+	                                      AND id=34
+	                                   FOR UPDATE NOWAIT
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 11660) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 12212) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-17 12:07:37 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  redo ÔÚ 0/3FC5668 ¿ªÊ¼
+ÈÕÖ¾:  0/42041B8 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  redo ÔÚ 0/4204190 Íê³É
+ÈÕÖ¾:  ÉÏÒ»´ÎÍê³ÉÊÂÎñÊÇÔÚÈÕÖ¾Ê±¼ä2017-08-17 12:11:05.638631+08Íê³ÉµÄ.
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 12:15:36 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 11376) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 11388) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-17 12:15:39 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/14EC0B0 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  ²ÎÊý "dynamic_shared_memory_type" µÄÖµÎÞÐ§: "posix"
+ÌáÊ¾:  Available values: windows, none.
+< 2017-08-18 10:50:48.736 CST > ÈÕÖ¾:  ²ÎÊý "lc_monetary" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:50:48.736 CST > ÈÕÖ¾:  ²ÎÊý "lc_numeric" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:50:48.737 CST > ÈÕÖ¾:  ²ÎÊý "lc_time" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:50:48.737 CST > ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  ²ÎÊý "dynamic_shared_memory_type" µÄÖµÎÞÐ§: "posix"
+ÌáÊ¾:  Available values: windows, none.
+< 2017-08-18 10:53:21.310 CST > ÈÕÖ¾:  ²ÎÊý "lc_monetary" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:53:21.311 CST > ÈÕÖ¾:  ²ÎÊý "lc_numeric" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:53:21.311 CST > ÈÕÖ¾:  ²ÎÊý "lc_time" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+< 2017-08-18 10:53:21.311 CST > ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ14
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ14
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ15
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-17 12:18:30 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 10388) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  autovacuumÆô¶¯½ø³Ì (PID 11300) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+^CÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-18 11:04:31 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/14EC190 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "guohu" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+±ÈÖÂÃü´íÎó»¹¹ý·ÖµÄ´íÎó:  ÎÞ·¨´ò¿ª¿ØÖÆÎÄ¼þ "global/pg_control": No such file or directory
+ÈÕÖ¾:  ¼ì²éµã(checkpointer)½ø³Ì (PID 14016) ±»Òì³£ 0xC0000409 ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Òì³£¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ14
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:08:43 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ14
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ14
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:09:40 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:23:13 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ16
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:24:18 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ22
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:26:11 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:27:41 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ27
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Î´ÈÏ¿ÉµÄÅäÖÃ²ÎÊý "checkpoint_segments", ÎÄ¼þ"D:/odoo10-x64/runtime/pgsql/data/postgresql.conf", ÐÐ27
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:28:15 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  ²ÎÊý "lc_monetary" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+ÈÕÖ¾:  ²ÎÊý "lc_numeric" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+ÈÕÖ¾:  ²ÎÊý "lc_time" µÄÖµÎÞÐ§: "zh_CN.UTF-8"
+ÖÂÃü´íÎó:  ÅäÖÃÎÄ¼þ "D:/odoo10-x64/runtime/pgsql/data/postgresql.conf" ÓÐ´í
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 03:30:38 GMT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:31:46 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­autovacuumè¿›ç¨‹
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 11:43:20 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+é”™è¯¯:  æ— æ³•åœ¨å…³ç³» "ir_cron"ä¸­çš„è®°å½•ä¸ŠèŽ·å¾—é”
+è¯­å¥:  SELECT *
+	                                   FROM ir_cron
+	                                   WHERE numbercall != 0
+	                                      AND active
+	                                      AND nextcall <= (now() at time zone 'UTC')
+	                                      AND id=2
+	                                   FOR UPDATE NOWAIT
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 11084) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-18 12:58:41 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  redo ÔÚ 0/63A4618 ¿ªÊ¼
+ÈÕÖ¾:  0/76F4510 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  redo ÔÚ 0/76F44E8 Íê³É
+ÈÕÖ¾:  ÉÏÒ»´ÎÍê³ÉÊÂÎñÊÇÔÚÈÕÖ¾Ê±¼ä2017-08-18 13:03:27.387195+08Íê³ÉµÄ.
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 9704) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-18 13:03:32 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/76F4580 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  Í³¼ÆÊÕ¼¯Æ÷½ø³Ì (PID 8804) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+´íÎó:  ÓÉÓÚÓÃ»§ÇëÇó¶øÕýÔÚÈ¡Ïû²éÑ¯
+ÈÕÖ¾:  autovacuumÆô¶¯½ø³Ì (PID 4760) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+^CÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-18 13:03:43 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  0/76F45F0 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  ²»ÐèÒª redo
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ·þÎñÆ÷½ø³Ì (PID 8932) ±»Òì³£ 0xC000013A ÖÕÖ¹
+ÏêÏ¸ÐÅÏ¢:  Ê§°Ü½ø³Ì:COMMITÕýÔÚÔËÐÐ
+ÌáÊ¾:  ¹ØÓÚ¶Ô16½øÖÆÖµµÄÃèÊö£¬ ²Î¼ûCÓïÑÔµÄÒýÓÃÎÄ¼þ "ntstatus.h" 
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎÆäËüÒÑ¼¤»îµÄ·þÎñÆ÷½ø³Ì
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+è­¦å‘Š:  ä¸­æ–­è”æŽ¥, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹å´©æºƒ
+è¯¦ç»†ä¿¡æ¯:  Postmaster å‘½ä»¤æ­¤æœåŠ¡å™¨è¿›ç¨‹å›žæ»šå½“å‰äº‹ç‰©å¹¶é€€å‡º, å› ä¸ºå…¶å®ƒæœåŠ¡å™¨è¿›ç¨‹ä¸æ­£å¸¸çš„é€€å‡ºå¯èƒ½æ¯åäº†å…±äº«å†…å­˜.
+æç¤º:  ä¸€ä¼šå„¿ä½ å°†å¯ä»¥é‡è”æŽ¥æ•°æ®åº“å¹¶ä¸”é‡å¤ä½ çš„å‘½ä»¤.
+¾¯¸æ:  ÖÐ¶ÏÁª½Ó, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì±ÀÀ£
+ÏêÏ¸ÐÅÏ¢:  Postmaster ÃüÁî´Ë·þÎñÆ÷½ø³Ì»Ø¹öµ±Ç°ÊÂÎï²¢ÍË³ö, ÒòÎªÆäËü·þÎñÆ÷½ø³Ì²»Õý³£µÄÍË³ö¿ÉÄÜ»Ù»µÁË¹²ÏíÄÚ´æ.
+ÌáÊ¾:  Ò»»á¶ùÄã½«¿ÉÒÔÖØÁª½ÓÊý¾Ý¿â²¢ÇÒÖØ¸´ÄãµÄÃüÁî.
+ÈÕÖ¾:  ËùÓÐµÄ·þÎñÆ÷½ø³Ì±»ÖÐÖ¹; ÖØÐÂ³õÊ¼»¯
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-18 13:05:42 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  redo ÔÚ 0/76F4660 ¿ªÊ¼
+ÈÕÖ¾:  ÈÕÖ¾¶Î000000010000000000000007¡¢Æ«ÒÆÁ¿7462912ÖÐµÄmagicºÅ0000ÎÞÐ§
+ÈÕÖ¾:  redo ÔÚ 0/771BFE0 Íê³É
+ÈÕÖ¾:  ÉÏÒ»´ÎÍê³ÉÊÂÎñÊÇÔÚÈÕÖ¾Ê±¼ä2017-08-18 13:05:55.895947+08Íê³ÉµÄ.
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+é”™è¯¯:  å¿…é¡»æ˜¯æ‰©å±• plpgsql çš„å±žä¸»
+è¯­å¥:  COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+é”™è¯¯:  åœ¨å­—æ®µ "model" ä¸­ç©ºå€¼è¿åäº†éžç©ºçº¦æŸ
+è¯¦ç»†ä¿¡æ¯:  å¤±è´¥, è¡ŒåŒ…å«(52, 2017-08-18 04:54:00.954523, 2017-08-18 04:54:00.954523, 22, null, mail_mass_mailing_list_survey_mail_compose_message_rel, null, null, null, null).
+ä¸Šä¸‹æ–‡:  SQL è¯­å¥ "UPDATE ONLY "public"."ir_model_relation" SET "model" = NULL WHERE $1 OPERATOR(pg_catalog.=) "model""
+è¯­å¥:  DELETE FROM ir_model WHERE id IN (226)
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-18 13:14:33 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:35:36 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+é”™è¯¯:  æ— æ³•åœ¨å…³ç³» "ir_cron"ä¸­çš„è®°å½•ä¸ŠèŽ·å¾—é”
+è¯­å¥:  SELECT *
+	                                   FROM ir_cron
+	                                   WHERE numbercall != 0
+	                                      AND active
+	                                      AND nextcall <= (now() at time zone 'UTC')
+	                                      AND id=2
+	                                   FOR UPDATE NOWAIT
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:37:47 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÖÐ¶Ï£»ÉÏÒ»´ÎµÄÆô¶¯Ê±¼äÊÇÔÚ2017-08-20 01:38:22 HKT
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³Ã»ÓÐÕýÈ·µÄ¹Ø±Õ; ´¦ÓÚ×Ô¶¯»Ö¸´×´Ì¬ÖÐ
+ÈÕÖ¾:  redo ÔÚ 0/9CDDEC0 ¿ªÊ¼
+ÈÕÖ¾:  0/9CE7ED8 ´¦µÄ¼ÇÂ¼³¤¶È²»ºÏ·¨£ºÏëÒª 24£¬µ«µÃµ½µÄÊÇ 0
+ÈÕÖ¾:  redo ÔÚ 0/9CE7E20 Íê³É
+ÈÕÖ¾:  ÉÏÒ»´ÎÍê³ÉÊÂÎñÊÇÔÚÈÕÖ¾Ê±¼ä2017-08-20 01:38:35.467671+08Íê³ÉµÄ.
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+é”™è¯¯:  æ— æ³•åœ¨å…³ç³» "ir_cron"ä¸­çš„è®°å½•ä¸ŠèŽ·å¾—é”
+è¯­å¥:  SELECT *
+	                                   FROM ir_cron
+	                                   WHERE numbercall != 0
+	                                      AND active
+	                                      AND nextcall <= (now() at time zone 'UTC')
+	                                      AND id=1
+	                                   FOR UPDATE NOWAIT
+ÖÂÃü´íÎó:  Êý¾Ý¿â "aaa" ²»´æÔÚ
+ÖÂÃü´íÎó:  Êý¾Ý¿â "v10" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:40:35 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+è¯­å¥:  SELECT a.attname, a.attnotnull  FROM pg_class c, pg_attribute a WHERE c.relname='res_company'   AND c.oid=a.attrelid   AND a.attisdropped=false   AND pg_catalog.format_type(a.atttypid, a.atttypmod) NOT IN ('cid', 'tid', 'oid', 'xid')   AND a.attname NOT IN ('rml_footer', 'create_date', 'rml_header', 'sequence', 'rml_paper_format', 'write_uid', 'currency_id', 'logo_web', 'font', 'partner_id', 'id', 'account_no', 'parent_id', 'email', 'create_uid', 'custom_footer', 'phone', 'rml_header2', 'rml_header3', 'write_date', 'rml_header1', 'name', 'company_registry')
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+´íÎó:  ÓÉÓÚÓÃ»§ÇëÇó¶øÕýÔÚÈ¡Ïû²éÑ¯
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:55:51 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "d64" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:56:56 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "d64" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:59:13 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 01:59:20 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "d64" ²»´æÔÚ
+é”™è¯¯:  æ— æ³•åœ¨å…³ç³» "ir_cron"ä¸­çš„è®°å½•ä¸ŠèŽ·å¾—é”
+è¯­å¥:  SELECT *
+	                                   FROM ir_cron
+	                                   WHERE numbercall != 0
+	                                      AND active
+	                                      AND nextcall <= (now() at time zone 'UTC')
+	                                      AND id=2
+	                                   FOR UPDATE NOWAIT
+ÖÂÃü´íÎó:  Êý¾Ý¿â "iiii" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 02:11:00 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÖÂÃü´íÎó:  Êý¾Ý¿â "d64" ²»´æÔÚ
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÉÏ´Î¹Ø±ÕÊ±¼äÎª 2017-08-20 02:14:16 HKT
+ÈÕÖ¾:  ¶àÊÂÎñ³ÉÔ±»Ø¾í±£»¤ÏÖÔÚ±»ÆôÓÃ¡£
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³×¼±¸½ÓÊÜÁ¬½Ó
+ÈÕÖ¾:  ÒÑÆô¶¯autovacuum
+ÈÕÖ¾:  ½ÓÊÕµ½¿ìËÙ (fast) Í£Ö¹ÇëÇó
+ÈÕÖ¾:  ÖÐ¶ÏÈÎºÎ¼¤»îÊÂÎñ
+ÈÕÖ¾:  ÕýÔÚ¹Ø±ÕautovacuumÆô¶¯½ø³Ì
+è‡´å‘½é”™è¯¯:  ç”±äºŽç®¡ç†å‘˜å‘½ä»¤ä¸­æ–­è”æŽ¥
+ÈÕÖ¾:  ÕýÔÚ¹Ø±Õ
+ÈÕÖ¾:  Êý¾Ý¿âÏµÍ³ÒÑ¹Ø±Õ
