@@ -24,20 +24,21 @@ service_install.bat 安装成系统服务，自动启动
 service_remove.bat 卸载系统服务
 extra 依赖文件目录，如果要自行安装涉及到的库，其它如果提示dll错误请安装 vcredist_x64.exe
 
-##先装pip
+##自行在windows下安装说明
+###先装pip
 python extra\get-pip.py
-##对某些要编译的Python包，在此找  python-ldap, gevent, psutil 
+###对某些要编译的Python包，在此找  python-ldap, gevent, psutil 
 http://www.lfd.uci.edu/~gohlke/pythonlibs/
-##安装依赖
+###安装依赖
 pip install -r .\source\rwin.txt  -i https://mirrors.aliyun.com/pypi/simple
-##Postgresql,进入bin目录执行环境初始化
+###Postgresql,进入bin目录执行环境初始化
 cd runtime\pgsql\bin
 initdb.exe -D ..\data -E UTF8
 pg_ctl -D ..\data -l logfile start
 ###创建用户，密码，都是odoo
 createuser --createdb --no-createrole --no-superuser --pwprompt odoo
-##安装npm相关
+###安装npm相关
 cd runtime/win32/nodejs
 npm install -g less less-plugin-clean-css
-##Nginx配置相关
+###Nginx配置相关
 runtime/nginx/nginx.conf
