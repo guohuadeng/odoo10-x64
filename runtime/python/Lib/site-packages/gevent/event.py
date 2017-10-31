@@ -2,8 +2,7 @@
 """Basic synchronization primitives: Event and AsyncResult"""
 from __future__ import print_function
 import sys
-from gevent.hub import get_hub, getcurrent, _NONE
-from gevent._compat import reraise
+from gevent.hub import get_hub, getcurrent, _NONE, reraise
 from gevent.hub import InvalidSwitchError
 from gevent.timeout import Timeout
 from gevent._tblib import dump_traceback, load_traceback
@@ -13,7 +12,7 @@ __all__ = ['Event', 'AsyncResult']
 
 class _AbstractLinkable(object):
     # Encapsulates the standard parts of the linking and notifying protocol
-    # common to both repeatable events and one-time events (AsyncResult).
+    # common to both repeatable events and one-time events (AsyncResolt).
 
     _notifier = None
 
@@ -79,18 +78,8 @@ class _AbstractLinkable(object):
             if link in self._links:
                 try:
                     link(self)
-                except: # pylint:disable=bare-except
+                except:
                     self.hub.handle_error((link, self), *sys.exc_info())
-                if getattr(link, 'auto_unlink', None):
-                    # This attribute can avoid having to keep a reference to the function
-                    # *in* the function, which is a cycle
-                    self.unlink(link)
-
-        # save a tiny bit of memory by letting _notifier be collected
-        # bool(self._notifier) would turn to False as soon as we exit this
-        # method anyway.
-        del todo
-        del self._notifier
 
     def _wait_core(self, timeout, catch=Timeout):
         # The core of the wait implementation, handling
@@ -119,7 +108,6 @@ class _AbstractLinkable(object):
             self.unlink(switch)
 
     def _wait_return_value(self, waited, wait_success):
-        # pylint:disable=unused-argument
         return None
 
     def _wait(self, timeout=None):
@@ -179,7 +167,7 @@ class Event(_AbstractLinkable):
         """
         self._flag = False
 
-    def _wait_return_value(self, waited, wait_success):
+    def _wait_return_value(self, waited, gotit):
         # To avoid the race condition outlined in http://bugs.python.org/issue13502,
         # if we had to wait, then we need to return whether or not
         # the condition got changed. Otherwise we simply echo
@@ -189,7 +177,7 @@ class Event(_AbstractLinkable):
             assert flag, "if we didn't wait we should already be set"
             return flag
 
-        return wait_success
+        return gotit
 
     def wait(self, timeout=None):
         """
@@ -393,8 +381,7 @@ class AsyncResult(_AbstractLinkable):
         """
         return self.get(block=False)
 
-    def _wait_return_value(self, waited, wait_success):
-        # pylint:disable=unused-argument
+    def _wait_return_value(self, waited, gotit):
         # Always return the value. Since this is a one-shot event,
         # no race condition should reset it.
         return self.value
@@ -426,23 +413,3 @@ class AsyncResult(_AbstractLinkable):
             self.set(source.value)
         else:
             self.set_exception(source.exception, getattr(source, 'exc_info', None))
-
-    # Methods to make us more like concurrent.futures.Future
-
-    def result(self, timeout=None):
-        return self.get(timeout=timeout)
-
-    set_result = set
-
-    def done(self):
-        return self.ready()
-
-    # we don't support cancelling
-
-    def cancel(self):
-        return False
-
-    def cancelled(self):
-        return False
-
-    # exception is a method, we use it as a property

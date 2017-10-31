@@ -2,8 +2,7 @@
 from __future__ import absolute_import
 import sys
 import os
-from gevent._compat import integer_types
-from gevent.hub import get_hub, getcurrent, sleep, _get_hub
+from gevent.hub import get_hub, getcurrent, sleep, integer_types
 from gevent.event import AsyncResult
 from gevent.greenlet import Greenlet
 from gevent.pool import GroupMappingMixin
@@ -189,10 +188,7 @@ class ThreadPool(GroupMappingMixin):
             with _lock:
                 self._size -= 1
 
-    _destroy_worker_hub = False
-
     def _worker(self):
-        # pylint:disable=too-many-branches
         need_decrease = True
         try:
             while True:
@@ -209,7 +205,7 @@ class ThreadPool(GroupMappingMixin):
                     func, args, kwargs, thread_result = task
                     try:
                         value = func(*args, **kwargs)
-                    except: # pylint:disable=bare-except
+                    except:
                         exc_info = getattr(sys, 'exc_info', None)
                         if exc_info is None:
                             return
@@ -223,23 +219,17 @@ class ThreadPool(GroupMappingMixin):
                         del func, args, kwargs, thread_result, task
                 finally:
                     if sys is None:
-                        return # pylint:disable=lost-exception
+                        return
                     task_queue.task_done()
         finally:
             if need_decrease:
                 self._decrease_size()
-            if sys is not None and self._destroy_worker_hub:
-                hub = _get_hub()
-                if hub is not None:
-                    hub.destroy(True)
-                del hub
 
     def apply_e(self, expected_errors, function, args=None, kwargs=None):
         """
         .. deprecated:: 1.1a2
            Identical to :meth:`apply`; the ``expected_errors`` argument is ignored.
         """
-        # pylint:disable=unused-argument
         # Deprecated but never documented. In the past, before
         # self.apply() allowed all errors to be raised to the caller,
         # expected_errors allowed a caller to specify a set of errors
@@ -266,21 +256,20 @@ class ThreadPool(GroupMappingMixin):
 
 class ThreadResult(object):
 
-    # Using slots here helps to debug reference cycles/leaks
-    __slots__ = ('exc_info', 'async', '_call_when_ready', 'value',
-                 'context', 'hub', 'receiver')
+    exc_info = ()
+    _call_when_ready = None
 
     def __init__(self, receiver, hub=None, call_when_ready=None):
         if hub is None:
             hub = get_hub()
         self.receiver = receiver
         self.hub = hub
-        self.context = None
         self.value = None
-        self.exc_info = ()
+        self.context = None
         self.async = hub.loop.async()
-        self._call_when_ready = call_when_ready
         self.async.start(self._on_async)
+        if call_when_ready:
+            self._call_when_ready = call_when_ready
 
     @property
     def exception(self):
@@ -344,155 +333,3 @@ def wrap_errors(errors, function, args, kwargs):
         return True, function(*args, **kwargs)
     except errors as ex:
         return False, ex
-
-try:
-    import concurrent.futures
-except ImportError:
-    pass
-else:
-    __all__.append("ThreadPoolExecutor")
-
-    from gevent.timeout import Timeout as GTimeout
-    from gevent._util import Lazy
-    from concurrent.futures import _base as cfb
-
-    def _wrap_error(future, fn):
-        def cbwrap(_):
-            del _
-            # we're called with the async result, but
-            # be sure to pass in ourself. Also automatically
-            # unlink ourself so that we don't get called multiple
-            # times.
-            try:
-                fn(future)
-            except Exception: # pylint: disable=broad-except
-                future.hub.print_exception((fn, future), *sys.exc_info())
-        cbwrap.auto_unlink = True
-        return cbwrap
-
-    def _wrap(future, fn):
-        def f(_):
-            fn(future)
-        f.auto_unlink = True
-        return f
-
-    class _FutureProxy(object):
-        def __init__(self, asyncresult):
-            self.asyncresult = asyncresult
-
-        # Internal implementation details of a c.f.Future
-
-        @Lazy
-        def _condition(self):
-            from gevent import monkey
-            if monkey.is_module_patched('threading') or self.done():
-                import threading
-                return threading.Condition()
-            # We can only properly work with conditions
-            # when we've been monkey-patched. This is necessary
-            # for the wait/as_completed module functions.
-            raise AttributeError("_condition")
-
-        @Lazy
-        def _waiters(self):
-            self.asyncresult.rawlink(self.__when_done)
-            return []
-
-        def __when_done(self, _):
-            # We should only be called when _waiters has
-            # already been accessed.
-            waiters = getattr(self, '_waiters')
-            for w in waiters: # pylint:disable=not-an-iterable
-                if self.successful():
-                    w.add_result(self)
-                else:
-                    w.add_exception(self)
-
-        __when_done.auto_unlink = True
-
-        @property
-        def _state(self):
-            if self.done():
-                return cfb.FINISHED
-            return cfb.RUNNING
-
-        def set_running_or_notify_cancel(self):
-            # Does nothing, not even any consistency checks. It's
-            # meant to be internal to the executor and we don't use it.
-            return
-
-        def result(self, timeout=None):
-            try:
-                return self.asyncresult.result(timeout=timeout)
-            except GTimeout:
-                # XXX: Theoretically this could be a completely
-                # unrelated timeout instance. Do we care about that?
-                raise concurrent.futures.TimeoutError()
-
-        def exception(self, timeout=None):
-            try:
-                self.asyncresult.get(timeout=timeout)
-                return self.asyncresult.exception
-            except GTimeout:
-                raise concurrent.futures.TimeoutError()
-
-        def add_done_callback(self, fn):
-            if self.done():
-                fn(self)
-            else:
-                self.asyncresult.rawlink(_wrap_error(self, fn))
-
-        def rawlink(self, fn):
-            self.asyncresult.rawlink(_wrap(self, fn))
-
-        def __str__(self):
-            return str(self.asyncresult)
-
-        def __getattr__(self, name):
-            return getattr(self.asyncresult, name)
-
-    class ThreadPoolExecutor(concurrent.futures.ThreadPoolExecutor):
-        """
-        A version of :class:`concurrent.futures.ThreadPoolExecutor` that
-        always uses native threads, even when threading is monkey-patched.
-
-        The ``Future`` objects returned from this object can be used
-        with gevent waiting primitives like :func:`gevent.wait`.
-
-        .. caution:: If threading is *not* monkey-patched, then the ``Future``
-           objects returned by this object are not guaranteed to work with
-           :func:`~concurrent.futures.as_completed` and :func:`~concurrent.futures.wait`.
-           The individual blocking methods like :meth:`~concurrent.futures.Future.result`
-           and :meth:`~concurrent.futures.Future.exception` will always work.
-
-        .. versionadded:: 1.2a1
-           This is a provisional API.
-        """
-
-        def __init__(self, max_workers):
-            super(ThreadPoolExecutor, self).__init__(max_workers)
-            self._threadpool = ThreadPool(max_workers)
-            self._threadpool._destroy_worker_hub = True
-
-        def submit(self, fn, *args, **kwargs):
-            with self._shutdown_lock: # pylint:disable=not-context-manager
-                if self._shutdown:
-                    raise RuntimeError('cannot schedule new futures after shutdown')
-
-                future = self._threadpool.spawn(fn, *args, **kwargs)
-                return _FutureProxy(future)
-
-        def shutdown(self, wait=True):
-            super(ThreadPoolExecutor, self).shutdown(wait)
-            # XXX: We don't implement wait properly
-            kill = getattr(self._threadpool, 'kill', None)
-            if kill: # pylint:disable=using-constant-test
-                self._threadpool.kill()
-            self._threadpool = None
-
-        kill = shutdown # greentest compat
-
-        def _adjust_thread_count(self):
-            # Does nothing. We don't want to spawn any "threads",
-            # let the threadpool handle that.
-            pass

@@ -1,13 +1,8 @@
 """
 Secure Sockets Layer (SSL/TLS) module.
 """
-from gevent._compat import PY2
-from gevent._util import copy_globals
+from gevent.hub import PY2
 
-# things we expect to override, here for static analysis
-def wrap_socket(_sock, **_kwargs):
-    # pylint:disable=unused-argument
-    raise NotImplementedError()
 
 if PY2:
     if hasattr(__import__('ssl'), 'SSLContext'):
@@ -17,10 +12,13 @@ if PY2:
         # don't pollute the namespace
         from gevent import _sslgte279 as _source
     else:
-        from gevent import _ssl2 as _source # pragma: no cover
+        from gevent import _ssl2 as _source
 else:
     # Py3
-    from gevent import _ssl3 as _source # pragma: no cover
+    from gevent import _ssl3 as _source
 
 
-copy_globals(_source, globals())
+for key in _source.__dict__:
+    if key.startswith('__') and key not in '__implements__ __all__ __imports__'.split():
+        continue
+    globals()[key] = getattr(_source, key)

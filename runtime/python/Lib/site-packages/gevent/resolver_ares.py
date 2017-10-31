@@ -6,10 +6,9 @@ from __future__ import absolute_import
 import os
 import sys
 from _socket import getservbyname, getaddrinfo, gaierror, error
-from gevent.hub import Waiter, get_hub
-from gevent._compat import string_types, text_type, integer_types, reraise, PY3
+from gevent.hub import Waiter, get_hub, string_types, text_type, integer_types, reraise, PY3
 from gevent.socket import AF_UNSPEC, AF_INET, AF_INET6, SOCK_STREAM, SOCK_DGRAM, SOCK_RAW, AI_NUMERICHOST, EAI_SERVICE, AI_PASSIVE
-from gevent.ares import channel, InvalidIP # pylint:disable=import-error,no-name-in-module
+from gevent.ares import channel, InvalidIP
 
 
 __all__ = ['Resolver']
@@ -23,32 +22,10 @@ class Resolver(object):
     resolution. c-ares is natively asynchronous at the socket level
     and so integrates well into gevent's event loop.
 
-    In comparison to :class:`gevent.resolver_thread.Resolver` (which
-    delegates to the native system resolver), the implementation is
-    much more complex. In addition, there have been reports of it not
-    properly honoring certain system configurations (for example, the
-    order in which IPv4 and IPv6 results are returned may not match
-    the threaded resolver). However, because it does not use threads,
-    it may scale better for applications that make many lookups.
-
-    There are some known differences from the system resolver:
-
-    - ``gethostbyname_ex`` and ``gethostbyaddr`` may return different
-      for the ``aliaslist`` tuple member. (Sometimes the same,
-      sometimes in a different order, sometimes a different alias
-      altogether.)
-    - ``gethostbyname_ex`` may return the ``ipaddrlist`` in a different order.
-    - ``getaddrinfo`` does not return ``SOCK_RAW`` results.
-    - ``getaddrinfo`` may return results in a different order.
-    - Handling of ``.local`` (mDNS) names may be different, even if they are listed in
-      the hosts file.
-    - c-ares will not resolve ``broadcasthost``, even if listed in the hosts file.
-    - This implementation may raise ``gaierror(4)`` where the system implementation would raise
-      ``herror(1)``.
-    - The results for ``localhost`` may be different. In particular, some system
-      resolvers will return more results from ``getaddrinfo`` than c-ares does,
-      such as SOCK_DGRAM results, and c-ares may report more ips on a multi-homed
-      host.
+    In comparison to :class:`gevent.resolver_thread.Resolver`, the
+    implementation is much more complex. In addition, there have been
+    reports of it not properly honoring certain system configurations.
+    However, because it does not use threads, it may scale better.
 
     .. caution:: This module is considered extremely experimental on PyPy, and
        due to its implementation in cython, it may be slower. It may also lead to
@@ -120,16 +97,10 @@ class Resolver(object):
                 return result
             except gaierror:
                 if ares is self.ares:
-                    if hostname == b'255.255.255.255':
-                        # The stdlib handles this case in 2.7 and 3.x, but ares does not.
-                        # It is tested by test_socket.py in 3.4.
-                        # HACK: So hardcode the expected return.
-                        return ('255.255.255.255', [], ['255.255.255.255'])
                     raise
                 # "self.ares is not ares" means channel was destroyed (because we were forked)
 
     def _lookup_port(self, port, socktype):
-        # pylint:disable=too-many-branches
         socktypes = []
         if isinstance(port, string_types):
             try:
@@ -175,7 +146,6 @@ class Resolver(object):
         return port, socktypes
 
     def _getaddrinfo(self, host, port, family=0, socktype=0, proto=0, flags=0):
-        # pylint:disable=too-many-locals,too-many-branches
         if isinstance(host, text_type):
             host = host.encode('idna')
         elif not isinstance(host, str) or (flags & AI_NUMERICHOST):
@@ -197,19 +167,19 @@ class Resolver(object):
         ares = self.ares
 
         if family == AF_UNSPEC:
-            ares_values = Values(self.hub, 2)
-            ares.gethostbyname(ares_values, host, AF_INET)
-            ares.gethostbyname(ares_values, host, AF_INET6)
+            values = Values(self.hub, 2)
+            ares.gethostbyname(values, host, AF_INET)
+            ares.gethostbyname(values, host, AF_INET6)
         elif family == AF_INET:
-            ares_values = Values(self.hub, 1)
-            ares.gethostbyname(ares_values, host, AF_INET)
+            values = Values(self.hub, 1)
+            ares.gethostbyname(values, host, AF_INET)
         elif family == AF_INET6:
-            ares_values = Values(self.hub, 1)
-            ares.gethostbyname(ares_values, host, AF_INET6)
+            values = Values(self.hub, 1)
+            ares.gethostbyname(values, host, AF_INET6)
         else:
             raise gaierror(5, 'ai_family not supported: %r' % (family, ))
 
-        values = ares_values.get()
+        values = values.get()
         if len(values) == 2 and values[0] == values[1]:
             values.pop()
 
@@ -221,8 +191,8 @@ class Resolver(object):
             if addrs.family == AF_INET:
                 for addr in addrs[-1]:
                     sockaddr = (addr, port)
-                    for socktype4, proto4 in socktype_proto:
-                        result4.append((AF_INET, socktype4, proto4, '', sockaddr))
+                    for socktype, proto in socktype_proto:
+                        result4.append((AF_INET, socktype, proto, '', sockaddr))
             elif addrs.family == AF_INET6:
                 for addr in addrs[-1]:
                     if addr == '::1':
@@ -230,13 +200,9 @@ class Resolver(object):
                     else:
                         dest = result6
                     sockaddr = (addr, port, 0, 0)
-                    for socktype6, proto6 in socktype_proto:
-                        dest.append((AF_INET6, socktype6, proto6, '', sockaddr))
+                    for socktype, proto in socktype_proto:
+                        dest.append((AF_INET6, socktype, proto, '', sockaddr))
 
-        # As of 2016, some platforms return IPV6 first and some do IPV4 first,
-        # and some might even allow configuration of which is which. For backwards
-        # compatibility with earlier releases (but not necessarily resolver_thread!)
-        # we return 4 first. See https://github.com/gevent/gevent/issues/815 for more.
         result += result4 + result6
 
         if not result:
@@ -315,7 +281,7 @@ class Resolver(object):
             reraise(*sys.exc_info())
         elif len(result) != 1:
             raise error('sockaddr resolved to multiple addresses')
-        family, _socktype, _proto, _name, address = result[0]
+        family, socktype, proto, name, address = result[0]
 
         if family == AF_INET:
             if len(sockaddr) != 2:
@@ -325,17 +291,7 @@ class Resolver(object):
 
         self.ares.getnameinfo(waiter, address, flags)
         node, service = waiter.get()
-
         if service is None:
-            if PY3:
-                # ares docs: "If the query did not complete
-                # successfully, or one of the values was not
-                # requested, node or service will be NULL ". Python 2
-                # allows that for the service, but Python 3 raises
-                # an error. This is tested by test_socket in py 3.4
-                err = gaierror('nodename nor servname provided, or not known')
-                err.errno = 8
-                raise err
             service = '0'
         return node, service
 
@@ -375,8 +331,7 @@ class Values(object):
         if self.values:
             return self.values
         else:
-            assert error is not None
-            raise self.error # pylint:disable=raising-bad-type
+            raise self.error
 
 
 def _resolve_special(hostname, family):

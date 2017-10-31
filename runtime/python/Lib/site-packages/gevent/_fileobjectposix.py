@@ -6,10 +6,10 @@ from io import BufferedWriter
 from io import BytesIO
 from io import DEFAULT_BUFFER_SIZE
 from io import RawIOBase
+from io import TextIOWrapper
 from io import UnsupportedOperation
 
 from gevent._fileobjectcommon import cancel_wait_ex
-from gevent._fileobjectcommon import FileObjectBase
 from gevent.hub import get_hub
 from gevent.os import _read
 from gevent.os import _write
@@ -24,11 +24,8 @@ class GreenFileDescriptorIO(RawIOBase):
     # the type's tp_dealloc slot; prior to Python 3, the object doesn't
     # appear to have a __del__ method, even though it functionally does)
 
-    _read_event = None
-    _write_event = None
-
     def __init__(self, fileno, mode='r', closefd=True):
-        RawIOBase.__init__(self) # Python 2: pylint:disable=no-member,non-parent-init-called
+        RawIOBase.__init__(self)
         self._closed = False
         self._closefd = closefd
         self._fileno = fileno
@@ -36,14 +33,15 @@ class GreenFileDescriptorIO(RawIOBase):
         self._readable = 'r' in mode
         self._writable = 'w' in mode
         self.hub = get_hub()
-
-        io_watcher = self.hub.loop.io
+        io = self.hub.loop.io
         if self._readable:
-            self._read_event = io_watcher(fileno, 1)
-
+            self._read_event = io(fileno, 1)
+        else:
+            self._read_event = None
         if self._writable:
-            self._write_event = io_watcher(fileno, 2)
-
+            self._write_event = io(fileno, 2)
+        else:
+            self._write_event = None
         self._seekable = None
 
     def readable(self):
@@ -136,27 +134,21 @@ class GreenFileDescriptorIO(RawIOBase):
     def seek(self, offset, whence=0):
         return os.lseek(self._fileno, offset, whence)
 
-class FlushingBufferedWriter(BufferedWriter):
 
-    def write(self, b):
-        ret = BufferedWriter.write(self, b)
-        self.flush()
-        return ret
-
-class FileObjectPosix(FileObjectBase):
+class FileObjectPosix(object):
     """
     A file-like object that operates on non-blocking files but
     provides a synchronous, cooperative interface.
 
     .. caution::
-         This object is only effective wrapping files that can be used meaningfully
+         This object is most effective wrapping files that can be used appropriately
          with :func:`select.select` such as sockets and pipes.
 
          In general, on most platforms, operations on regular files
-         (e.g., ``open('a_file.txt')``) are considered non-blocking
+         (e.g., ``open('/etc/hosts')``) are considered non-blocking
          already, even though they can take some time to complete as
-         data is copied to the kernel and flushed to disk: this time
-         is relatively bounded compared to sockets or pipes, though.
+         data is copied to the kernel and flushed to disk (this time
+         is relatively bounded compared to sockets or pipes, though).
          A :func:`~os.read` or :func:`~os.write` call on such a file
          will still effectively block for some small period of time.
          Therefore, wrapping this class around a regular file is
@@ -175,25 +167,15 @@ class FileObjectPosix(FileObjectBase):
          class.
 
     .. tip::
-         Although this object provides a :meth:`fileno` method and so
-         can itself be passed to :func:`fcntl.fcntl`, setting the
-         :data:`os.O_NONBLOCK` flag will have no effect (reads will
-         still block the greenlet, although other greenlets can run).
-         However, removing that flag *will cause this object to no
-         longer be cooperative* (other greenlets will no longer run).
-
-         You can use the internal ``fileio`` attribute of this object
-         (a :class:`io.RawIOBase`) to perform non-blocking byte reads.
-         Note, however, that once you begin directly using this
-         attribute, the results from using methods of *this* object
-         are undefined, especially in text mode. (See :issue:`222`.)
+         Although this object provides a :meth:`fileno` method and
+         so can itself be passed to :func:`fcntl.fcntl`, setting the
+         :data:`os.O_NONBLOCK` flag will have no effect; however, removing
+         that flag will cause this object to no longer be cooperative.
 
     .. versionchanged:: 1.1
        Now uses the :mod:`io` package internally. Under Python 2, previously
        used the undocumented class :class:`socket._fileobject`. This provides
        better file-like semantics (and portability to Python 3).
-    .. versionchanged:: 1.2a1
-       Document the ``fileio`` attribute for non-blocking reads.
     """
 
     #: platform specific default for the *bufsize* parameter
@@ -201,27 +183,17 @@ class FileObjectPosix(FileObjectBase):
 
     def __init__(self, fobj, mode='rb', bufsize=-1, close=True):
         """
-        :param fobj: Either an integer fileno, or an object supporting the
+        :keyword fobj: Either an integer fileno, or an object supporting the
             usual :meth:`socket.fileno` method. The file *will* be
             put in non-blocking mode using :func:`gevent.os.make_nonblocking`.
         :keyword str mode: The manner of access to the file, one of "rb", "rU" or "wb"
             (where the "b" or "U" can be omitted).
             If "U" is part of the mode, IO will be done on text, otherwise bytes.
         :keyword int bufsize: If given, the size of the buffer to use. The default
-            value means to use a platform-specific default
-            Other values are interpreted as for the :mod:`io` package.
+            value means to use a platform-specific default, and a value of 0 is translated
+            to a value of 1. Other values are interpreted as for the :mod:`io` package.
             Buffering is ignored in text mode.
-
-        .. versionchanged:: 1.2a1
-
-           A bufsize of 0 in write mode is no longer forced to be 1.
-           Instead, the underlying buffer is flushed after every write
-           operation to simulate a bufsize of 0. In gevent 1.0, a
-           bufsize of 0 was flushed when a newline was written, while
-           in gevent 1.1 it was flushed when more than one byte was
-           written. Note that this may have performance impacts.
         """
-
         if isinstance(fobj, int):
             fileno = fobj
             fobj = None
@@ -248,38 +220,93 @@ class FileObjectPosix(FileObjectBase):
             raise ValueError('mode can only be [rb, rU, wb], not %r' % (orig_mode,))
 
         self._fobj = fobj
+        self._closed = False
+        self._close = close
 
-        # This attribute is documented as available for non-blocking reads.
         self.fileio = GreenFileDescriptorIO(fileno, mode, closefd=close)
 
-        self._orig_bufsize = bufsize
         if bufsize < 0 or bufsize == 1:
             bufsize = self.default_bufsize
         elif bufsize == 0:
             bufsize = 1
 
         if mode == 'r':
-            IOFamily = BufferedReader
+            self.io = BufferedReader(self.fileio, bufsize)
         else:
             assert mode == 'w'
-            IOFamily = BufferedWriter
-            if self._orig_bufsize == 0:
-                # We could also simply pass self.fileio as *io*, but this way
-                # we at least consistently expose a BufferedWriter in our *io*
-                # attribute.
-                IOFamily = FlushingBufferedWriter
+            self.io = BufferedWriter(self.fileio, bufsize)
+        #else: # QQQ: not used, not reachable
+        #
+        #    self.io = BufferedRandom(self.fileio, bufsize)
 
-        super(FileObjectPosix, self).__init__(IOFamily(self.fileio, bufsize), close)
+        if self._translate:
+            self.io = TextIOWrapper(self.io)
 
-    def _do_close(self, fobj, closefd):
+    @property
+    def closed(self):
+        """True if the file is closed"""
+        return self._closed
+
+    def close(self):
+        if self._closed:
+            # make sure close() is only run once when called concurrently
+            return
+        self._closed = True
         try:
-            fobj.close()
-            # self.fileio already knows whether or not to close the
-            # file descriptor
+            self.io.close()
             self.fileio.close()
         finally:
             self._fobj = None
-            self.fileio = None
+
+    def flush(self):
+        self.io.flush()
+
+    def fileno(self):
+        return self.io.fileno()
+
+    def write(self, data):
+        self.io.write(data)
+
+    def writelines(self, lines):
+        self.io.writelines(lines)
+
+    def read(self, size=-1):
+        return self.io.read(size)
+
+    def readline(self, size=-1):
+        return self.io.readline(size)
+
+    def readlines(self, sizehint=0):
+        return self.io.readlines(sizehint)
+
+    def readable(self):
+        """
+        .. versionadded:: 1.1b2
+        """
+        return self.io.readable()
+
+    def writable(self):
+        """
+        .. versionadded:: 1.1b2
+        """
+        return self.io.writable()
+
+    def seek(self, *args, **kwargs):
+        return self.io.seek(*args, **kwargs)
+
+    def seekable(self):
+        return self.io.seekable()
+
+    def tell(self):
+        return self.io.tell()
+
+    def truncate(self, size=None):
+        return self.io.truncate(size)
 
     def __iter__(self):
-        return self._io
+        return self.io
+
+    def __getattr__(self, name):
+        # XXX: Should this really be _fobj, or self.io?
+        # _fobj can easily be None but io never is
+        return getattr(self._fobj, name)

@@ -15,10 +15,10 @@ from gevent.lock import RLock
 
 try: # Py2
     import __builtin__ as builtins
-    _allowed_module_name_types = (basestring,) # pylint:disable=undefined-variable
+    _allowed_module_name_types = (basestring,)
     __target__ = '__builtin__'
 except ImportError:
-    import builtins # pylint: disable=import-error
+    import builtins
     _allowed_module_name_types = (str,)
     __target__ = 'builtins'
 
@@ -35,7 +35,7 @@ _import = builtins.__import__
 # could lead to a LoopExit error as a greenlet attempts to block on it while
 # it's already held by the main greenlet (issue #798).
 
-# We base this approach on a simplification of what `importlib._bootstrap`
+# We base this approach on a simplification of what `importlib._boonstrap`
 # does; notably, we don't check for deadlocks
 
 _g_import_locks = {} # name -> wref of RLock
@@ -75,7 +75,7 @@ def __import__(*args, **kwargs):
     wraps the normal __import__ functionality in a recursive lock, ensuring that
     we're protected against greenlet import concurrency as well.
     """
-    if args and not issubclass(type(args[0]), _allowed_module_name_types):
+    if len(args) > 0 and not issubclass(type(args[0]), _allowed_module_name_types):
         # if a builtin has been acquired as a bound instance method,
         # python knows not to pass 'self' when the method is called.
         # No such protection exists for monkey-patched builtins,

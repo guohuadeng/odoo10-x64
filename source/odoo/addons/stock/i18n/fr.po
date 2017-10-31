@@ -34,21 +34,23 @@
 # lucasdeliege <deliegelucas@gmail.com>, 2016
 # Nicolas Seinlet <nicolas@seinlet.com>, 2016
 # Benedicte HANET <hanetb@gmail.com>, 2016
-# zeroheure <xavier@alternatif.org>, 2016
+# Xavier Brochard <xavier@alternatif.org>, 2016
 # Régis GEROMEGNACE <regis.geromegnace@gmail.com>, 2016
-# Nicolas JEUDY <nicolas@sudokeys.com>, 2016
+# Nicolas JEUDY <njeudy@panda-chi.io>, 2016
 # Shark McGnark <peculiarcheese@gmail.com>, 2016
 # Guilhaume Bordiau <github@guilhaume.fr>, 2016
 # Omar Mezga <omar.mezgrane@aldaway.com>, 2017
 # Eloïse Stilmant <est@odoo.com>, 2017
 # lap.odoo <lap@odoo.com>, 2017
+# nthnnl <nathan070@me.com>, 2017
+# Jérôme Tanché <jerome.tanche@ouest-dsi.fr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-22 14:03+0000\n"
 "PO-Revision-Date: 2016-11-22 14:03+0000\n"
-"Last-Translator: lap.odoo <lap@odoo.com>, 2017\n"
+"Last-Translator: Jérôme Tanché <jerome.tanche@ouest-dsi.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2298,6 +2300,11 @@ msgid ""
 "            location to the Stock location. Each report can be performed on\n"
 "            physical, partner or virtual locations."
 msgstr ""
+"Toute opération de stock dans Odoo déplace des articles d'un emplacement à "
+"un autre. Par exemple, si vous recevez des articles d'un fournisseur, Odoo "
+"déplacera les articles de l'emplacement Fournisseurs vers l'emplacement "
+"Stock. Chaque rapport peut porter sur un emplacement physique, un "
+"emplacement partenaire ou un emplacement virtuel."
 
 #. module: stock
 #: code:addons/stock/models/stock_quant.py:647
@@ -2558,7 +2565,7 @@ msgstr "A des Opérations de Colisage"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking_has_scrap_move
 msgid "Has Scrap Moves"
-msgstr ""
+msgstr "Comporte des mises au rebut"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking_quant_reserved_exist
@@ -4843,7 +4850,7 @@ msgstr "Positif"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_product_packaging
 msgid "Preferred Packaging"
-msgstr ""
+msgstr "Conditionnement préféré"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_make_procurement_route_ids
@@ -6345,6 +6352,8 @@ msgstr "Un numéro de série doit être unique pour un produit donné!"
 #: model:ir.model.fields,help:stock.field_stock_warehouse_company_id
 msgid "The company is automatically set from your user preferences."
 msgstr ""
+"L'entreprise est automatiquement définie d'après vos préférences "
+"d'utilisateur."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quant_company_id
@@ -6446,6 +6455,8 @@ msgid ""
 "The procurement quantity will be rounded up to this multiple.  If it is 0, "
 "the exact quantity will be used."
 msgstr ""
+"La quantité à approvisionner sera arrondie à ce multiple. S'il est à 0, la "
+"quantité exacte sera utilisée."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_move_rule_id
@@ -7492,6 +7503,9 @@ msgid ""
 "You can either do it immediately or mark it as Todo for future processing. "
 "Use your scanner to validate the transferred quantity quicker."
 msgstr ""
+"Vous pouvez soit le faire immédiatement ou le marquer comme À faire pour une"
+" prochaine opération. Utilisez votre lecteur code-barres pour valider plus "
+"rapidement les quantités transférées."
 
 #. module: stock
 #: code:addons/stock/models/product.py:486
@@ -7539,7 +7553,7 @@ msgstr ""
 #: code:addons/stock/models/stock_scrap.py:72
 #, python-format
 msgid "You cannot delete a scrap which is done."
-msgstr ""
+msgstr "Vous ne pouvez pas supprimer une mise au rebut terminée."
 
 #. module: stock
 #: code:addons/stock/models/stock_inventory.py:374

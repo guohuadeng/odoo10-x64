@@ -14,8 +14,7 @@ module add timeouts to arbitrary code.
     which no switches occur, :class:`Timeout` is powerless.
 """
 
-from gevent._compat import string_types
-from gevent.hub import getcurrent, _NONE, get_hub
+from gevent.hub import getcurrent, _NONE, get_hub, string_types
 
 __all__ = ['Timeout',
            'with_timeout']
@@ -30,7 +29,6 @@ class _FakeTimer(object):
     active = False
 
     def start(self, *args, **kwargs):
-        # pylint:disable=unused-argument
         raise AssertionError("non-expiring timer cannot be started")
 
     def stop(self):
@@ -124,11 +122,11 @@ class Timeout(BaseException):
        Add warning about negative *seconds* values.
     """
 
-    def __init__(self, seconds=None, exception=None, ref=True, priority=-1, _use_timer=True):
+    def __init__(self, seconds=None, exception=None, ref=True, priority=-1):
         BaseException.__init__(self)
         self.seconds = seconds
         self.exception = exception
-        if seconds is None or not _use_timer:
+        if seconds is None:
             # Avoid going through the timer codepath if no timeout is
             # desired; this avoids some CFFI interactions on PyPy that can lead to a
             # RuntimeError if this implementation is used during an `import` statement. See

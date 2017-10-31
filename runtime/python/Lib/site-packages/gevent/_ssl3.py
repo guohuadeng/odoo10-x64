@@ -6,19 +6,16 @@ For the documentation, refer to :mod:`ssl` module manual.
 
 This module implements cooperative SSL socket wrappers.
 """
-# Our import magic sadly makes this warning useless
-# pylint: disable=undefined-variable
 
 from __future__ import absolute_import
 import ssl as __ssl__
 
-_ssl = __ssl__._ssl # pylint:disable=no-member
+_ssl = __ssl__._ssl
 
 import errno
 from gevent.socket import socket, timeout_default
 from gevent.socket import error as socket_error
 from gevent.socket import timeout as _socket_timeout
-from gevent._util import copy_globals
 
 from weakref import ref as _wref
 
@@ -29,61 +26,45 @@ __implements__ = [
     'get_server_certificate',
 ]
 
-# Import all symbols from Python's ssl.py, except those that we are implementing
-# and "private" symbols.
-__imports__ = copy_globals(__ssl__, globals(),
-                           # SSLSocket *must* subclass gevent.socket.socket; see issue 597
-                           names_to_ignore=__implements__ + ['socket'],
-                           dunder_names_to_keep=())
+__imports__ = []
+
+name = value = None
+for name in dir(__ssl__):
+    if name in __implements__:
+        continue
+    if name.startswith('__'):
+        continue
+    if name == 'socket':
+        # SSLSocket *must* subclass gevent.socket.socket; see issue 597
+        continue
+    value = getattr(__ssl__, name)
+    globals()[name] = value
+    __imports__.append(name)
+
+del name, value
 
 __all__ = __implements__ + __imports__
-if 'namedtuple' in __all__:
-    __all__.remove('namedtuple')
 
-orig_SSLContext = __ssl__.SSLContext # pylint:disable=no-member
+orig_SSLContext = __ssl__.SSLContext
 
 
 class SSLContext(orig_SSLContext):
     def wrap_socket(self, sock, server_side=False,
                     do_handshake_on_connect=True,
                     suppress_ragged_eofs=True,
-                    server_hostname=None,
-                    session=None):
-        # pylint:disable=arguments-differ
-        # (3.6 adds session)
-        # Sadly, using *args and **kwargs doesn't work
+                    server_hostname=None):
         return SSLSocket(sock=sock, server_side=server_side,
                          do_handshake_on_connect=do_handshake_on_connect,
                          suppress_ragged_eofs=suppress_ragged_eofs,
                          server_hostname=server_hostname,
-                         _context=self,
-                         _session=session)
+                         _context=self)
 
     if not hasattr(orig_SSLContext, 'check_hostname'):
         # Python 3.3 lacks this
         check_hostname = False
 
-    if hasattr(orig_SSLContext.options, 'setter'):
-        # In 3.6, these became properties. They want to access the
-        # property __set__ method in the superclass, and they do so by using
-        # super(SSLContext, SSLContext). But we rebind SSLContext when we monkey
-        # patch, which causes infinite recursion.
-        # https://github.com/python/cpython/commit/328067c468f82e4ec1b5c510a4e84509e010f296
-        # pylint:disable=no-member
-        @orig_SSLContext.options.setter
-        def options(self, value):
-            super(orig_SSLContext, orig_SSLContext).options.__set__(self, value)
 
-        @orig_SSLContext.verify_flags.setter
-        def verify_flags(self, value):
-            super(orig_SSLContext, orig_SSLContext).verify_flags.__set__(self, value)
-
-        @orig_SSLContext.verify_mode.setter
-        def verify_mode(self, value):
-            super(orig_SSLContext, orig_SSLContext).verify_mode.__set__(self, value)
-
-
-class _contextawaresock(socket._gevent_sock_class): # Python 2: pylint:disable=slots-on-old-class
+class _contextawaresock(socket._gevent_sock_class):
     # We have to pass the raw stdlib socket to SSLContext.wrap_socket.
     # That method in turn can pass that object on to things like SNI callbacks.
     # It wouldn't have access to any of the attributes on the SSLSocket, like
@@ -104,15 +85,6 @@ class _contextawaresock(socket._gevent_sock_class): # Python 2: pylint:disable=s
     def context(self, ctx):
         self._sslsock().context = ctx
 
-    @property
-    def session(self):
-        """The SSLSession for client socket."""
-        return self._sslsock().session
-
-    @session.setter
-    def session(self, session):
-        self._sslsock().session = session
-
     def __getattr__(self, name):
         try:
             return getattr(self._sslsock(), name)
@@ -129,8 +101,6 @@ class SSLSocket(socket):
     for Python 3.
     """
 
-    # pylint:disable=too-many-instance-attributes,too-many-public-methods
-
     _gevent_sock_class = _contextawaresock
 
     def __init__(self, sock=None, keyfile=None, certfile=None,
@@ -140,9 +110,8 @@ class SSLSocket(socket):
                  family=AF_INET, type=SOCK_STREAM, proto=0, fileno=None,
                  suppress_ragged_eofs=True, npn_protocols=None, ciphers=None,
                  server_hostname=None,
-                 _session=None, # 3.6
                  _context=None):
-        # pylint:disable=too-many-locals,too-many-statements,too-many-branches
+
         if _context:
             self._context = _context
         else:
@@ -173,16 +142,12 @@ class SSLSocket(socket):
         # mixed in.
         if sock.getsockopt(SOL_SOCKET, SO_TYPE) != SOCK_STREAM:
             raise NotImplementedError("only stream sockets are supported")
-        if server_side:
-            if server_hostname:
-                raise ValueError("server_hostname can only be specified "
-                                 "in client mode")
-            if _session is not None:
-                raise ValueError("session can only be specified "
-                                 "in client mode")
+        if server_side and server_hostname:
+            raise ValueError("server_hostname can only be specified "
+                             "in client mode")
         if self._context.check_hostname and not server_hostname:
             raise ValueError("check_hostname requires server_hostname")
-        self._session = _session
+
         self.server_side = server_side
         self.server_hostname = server_hostname
         self.do_handshake_on_connect = do_handshake_on_connect
@@ -216,10 +181,8 @@ class SSLSocket(socket):
         if connected:
             # create the SSL object
             try:
-                self._sslobj = self._context._wrap_socket(self._sock, server_side,
-                                                          server_hostname)
-                if _session is not None: # 3.6
-                    self._sslobj = SSLObject(self._sslobj, owner=self, session=self._session)
+                self._sslobj = self.context._wrap_socket(self._sock, server_side,
+                                                         server_hostname)
                 if do_handshake_on_connect:
                     timeout = self.gettimeout()
                     if timeout == 0.0:
@@ -240,24 +203,6 @@ class SSLSocket(socket):
         self._context = ctx
         self._sslobj.context = ctx
 
-    @property
-    def session(self):
-        """The SSLSession for client socket."""
-        if self._sslobj is not None:
-            return self._sslobj.session
-
-    @session.setter
-    def session(self, session):
-        self._session = session
-        if self._sslobj is not None:
-            self._sslobj.session = session
-
-    @property
-    def session_reused(self):
-        """Was the client session reused during handshake"""
-        if self._sslobj is not None:
-            return self._sslobj.session_reused
-
     def dup(self):
         raise NotImplementedError("Can't dup() %s instances" %
                                   self.__class__.__name__)
@@ -277,20 +222,16 @@ class SSLSocket(socket):
     def read(self, len=1024, buffer=None):
         """Read up to LEN bytes and return them.
         Return zero-length string on EOF."""
-        # pylint:disable=too-many-branches
         self._checkClosed()
+        if not self._sslobj:
+            raise ValueError("Read on closed or unwrapped SSL socket.")
 
         while True:
-            if not self._sslobj:
-                raise ValueError("Read on closed or unwrapped SSL socket.")
-            if len == 0:
-                return b'' if buffer is None else 0
-            # Negative lengths are handled natively when the buffer is None
-            # to raise a ValueError
             try:
                 if buffer is not None:
                     return self._sslobj.read(len, buffer)
-                return self._sslobj.read(len or 1024)
+                else:
+                    return self._sslobj.read(len or 1024)
             except SSLWantReadError:
                 if self.timeout == 0.0:
                     raise
@@ -304,7 +245,8 @@ class SSLSocket(socket):
                 if ex.args[0] == SSL_ERROR_EOF and self.suppress_ragged_eofs:
                     if buffer is None:
                         return b''
-                    return 0
+                    else:
+                        return 0
                 else:
                     raise
 
@@ -312,11 +254,10 @@ class SSLSocket(socket):
         """Write DATA to the underlying SSL channel.  Returns
         number of bytes of DATA actually transmitted."""
         self._checkClosed()
+        if not self._sslobj:
+            raise ValueError("Write on closed or unwrapped SSL socket.")
 
         while True:
-            if not self._sslobj:
-                raise ValueError("Write on closed or unwrapped SSL socket.")
-
             try:
                 return self._sslobj.write(data)
             except SSLError as ex:
@@ -339,27 +280,23 @@ class SSLSocket(socket):
 
         self._checkClosed()
         self._check_connected()
-        try:
-            c = self._sslobj.peer_certificate
-        except AttributeError:
-            # 3.6
-            c = self._sslobj.getpeercert
-
-        return c(binary_form)
+        return self._sslobj.peer_certificate(binary_form)
 
     def selected_npn_protocol(self):
         self._checkClosed()
         if not self._sslobj or not _ssl.HAS_NPN:
             return None
-        return self._sslobj.selected_npn_protocol()
+        else:
+            return self._sslobj.selected_npn_protocol()
 
     if hasattr(_ssl, 'HAS_ALPN'):
         # 3.5+
         def selected_alpn_protocol(self):
             self._checkClosed()
-            if not self._sslobj or not _ssl.HAS_ALPN: # pylint:disable=no-member
+            if not self._sslobj or not _ssl.HAS_ALPN:
                 return None
-            return self._sslobj.selected_alpn_protocol()
+            else:
+                return self._sslobj.selected_alpn_protocol()
 
         def shared_ciphers(self):
             """Return a list of ciphers shared by the client during the handshake or
@@ -380,13 +317,15 @@ class SSLSocket(socket):
         self._checkClosed()
         if not self._sslobj:
             return None
-        return self._sslobj.cipher()
+        else:
+            return self._sslobj.cipher()
 
     def compression(self):
         self._checkClosed()
         if not self._sslobj:
             return None
-        return self._sslobj.compression()
+        else:
+            return self._sslobj.compression()
 
     def send(self, data, flags=0, timeout=timeout_default):
         self._checkClosed()
@@ -450,10 +389,6 @@ class SSLSocket(socket):
                 raise ValueError(
                     "non-zero flags not allowed in calls to recv() on %s" %
                     self.__class__)
-            if buflen == 0:
-                # https://github.com/python/cpython/commit/00915577dd84ba75016400793bf547666e6b29b5
-                # Python #23804
-                return b''
             return self.read(buflen)
         else:
             return socket.recv(self, buflen, flags)
@@ -499,7 +434,8 @@ class SSLSocket(socket):
         self._checkClosed()
         if self._sslobj:
             return self._sslobj.pending()
-        return 0
+        else:
+            return 0
 
     def shutdown(self, how):
         self._checkClosed()
@@ -553,7 +489,7 @@ class SSLSocket(socket):
                     raise
                 self._wait(self._write_event, timeout_exc=_SSLErrorHandshakeTimeout)
 
-        if self._context.check_hostname:
+        if self.context.check_hostname:
             if not self.server_hostname:
                 raise ValueError("check_hostname needs server_hostname "
                                  "argument")
@@ -566,9 +502,7 @@ class SSLSocket(socket):
         # connected at the time of the call.  We connect it, then wrap it.
         if self._connected:
             raise ValueError("attempt to connect already-connected SSLSocket!")
-        self._sslobj = self._context._wrap_socket(self._sock, False, self.server_hostname)
-        if self._session is not None: # 3.6
-            self._sslobj = SSLObject(self._sslobj, owner=self, session=self._session)
+        self._sslobj = self.context._wrap_socket(self._sock, False, self.server_hostname)
         try:
             if connect_ex:
                 rc = socket.connect_ex(self, addr)
@@ -600,10 +534,10 @@ class SSLSocket(socket):
         SSL channel, and the address of the remote client."""
 
         newsock, addr = socket.accept(self)
-        newsock = self._context.wrap_socket(newsock,
-                                            do_handshake_on_connect=self.do_handshake_on_connect,
-                                            suppress_ragged_eofs=self.suppress_ragged_eofs,
-                                            server_side=True)
+        newsock = self.context.wrap_socket(newsock,
+                                           do_handshake_on_connect=self.do_handshake_on_connect,
+                                           suppress_ragged_eofs=self.suppress_ragged_eofs,
+                                           server_side=True)
         return newsock, addr
 
     def get_channel_binding(self, cb_type="tls-unique"):
@@ -648,8 +582,8 @@ def get_server_certificate(addr, ssl_version=PROTOCOL_SSLv23, ca_certs=None):
     If 'ca_certs' is specified, validate the server cert against it.
     If 'ssl_version' is specified, use it in the connection attempt."""
 
-    _, _ = addr
-    if ca_certs is not None:
+    host, port = addr
+    if (ca_certs is not None):
         cert_reqs = CERT_REQUIRED
     else:
         cert_reqs = CERT_NONE

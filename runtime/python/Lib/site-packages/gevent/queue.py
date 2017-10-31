@@ -30,12 +30,12 @@ import collections
 if sys.version_info[0] == 2:
     import Queue as __queue__
 else:
-    import queue as __queue__ # python 2: pylint:disable=import-error
+    import queue as __queue__
 Full = __queue__.Full
 Empty = __queue__.Empty
 
 from gevent.timeout import Timeout
-from gevent.hub import get_hub, Waiter, getcurrent
+from gevent.hub import get_hub, Waiter, getcurrent, PY3
 from gevent.hub import InvalidSwitchError
 
 
@@ -139,7 +139,8 @@ class Queue(object):
             result.append('putters[%s]' % len(self.putters))
         if result:
             return ' ' + ' '.join(result)
-        return ''
+        else:
+            return ''
 
     def qsize(self):
         """Return the size of the queue."""
@@ -346,8 +347,9 @@ class Queue(object):
             raise result
         return result
 
-    __next__ = next
-
+    if PY3:
+        __next__ = next
+        del next
 
 
 class ItemWaiter(Waiter):
@@ -369,17 +371,11 @@ class PriorityQueue(Queue):
     '''A subclass of :class:`Queue` that retrieves entries in priority order (lowest first).
 
     Entries are typically tuples of the form: ``(priority number, data)``.
-
-    .. versionchanged:: 1.2a1
-       Any *items* given to the constructor will now be passed through
-       :func:`heapq.heapify` to ensure the invariants of this class hold.
-       Previously it was just assumed that they were already a heap.
     '''
 
     def _init(self, maxsize, items=None):
         if items:
             self.queue = list(items)
-            heapq.heapify(self.queue)
         else:
             self.queue = []
 

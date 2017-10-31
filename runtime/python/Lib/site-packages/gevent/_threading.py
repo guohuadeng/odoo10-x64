@@ -5,17 +5,16 @@ or not).
 
 This module is missing 'Thread' class, but includes 'Queue'.
 """
-from __future__ import absolute_import
 try:
     from Queue import Full, Empty
 except ImportError:
-    from queue import Full, Empty # pylint:disable=import-error
+    from queue import Full, Empty
 from collections import deque
 import heapq
 from time import time as _time, sleep as _sleep
 
 from gevent import monkey
-from gevent._compat import PY3
+from gevent.hub import PY3
 
 
 __all__ = ['Condition',
@@ -91,7 +90,6 @@ class RLock(object):
 
 
 class Condition(object):
-    # pylint:disable=method-hidden
 
     def __init__(self, lock=None):
         if lock is None:
@@ -129,7 +127,7 @@ class Condition(object):
     def _release_save(self):
         self.__lock.release()           # No state to save
 
-    def _acquire_restore(self, x): # pylint:disable=unused-argument
+    def _acquire_restore(self, x):
         self.__lock.acquire()           # Ignore saved state
 
     def _is_owned(self):
@@ -138,7 +136,8 @@ class Condition(object):
         if self.__lock.acquire(0):
             self.__lock.release()
             return False
-        return True
+        else:
+            return True
 
     def wait(self, timeout=None):
         if not self._is_owned():
@@ -235,7 +234,7 @@ class BoundedSemaphore(Semaphore):
         self._initial_value = value
 
     def release(self):
-        if self.Semaphore__value >= self._initial_value: # pylint:disable=no-member
+        if self.Semaphore__value >= self._initial_value:
             raise ValueError("Semaphore released too many times")
         return Semaphore.release(self)
 
@@ -280,7 +279,7 @@ class Event(object):
             self.__cond.release()
 
 
-class Queue: # pylint:disable=old-style-class
+class Queue:
     """Create a queue object with a given maximum size.
 
     If maxsize is <= 0, the queue size is infinite.
@@ -463,7 +462,6 @@ class Queue: # pylint:disable=old-style-class
 
     # Initialize the queue representation
     def _init(self, maxsize):
-        # pylint:disable=unused-argument
         self.queue = deque()
 
     def _qsize(self, len=len):
@@ -491,11 +489,9 @@ class PriorityQueue(Queue):
         return len(self.queue)
 
     def _put(self, item, heappush=heapq.heappush):
-        # pylint:disable=arguments-differ
         heappush(self.queue, item)
 
     def _get(self, heappop=heapq.heappop):
-        # pylint:disable=arguments-differ
         return heappop(self.queue)
 
 

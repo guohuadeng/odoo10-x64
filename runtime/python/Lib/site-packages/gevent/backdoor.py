@@ -9,14 +9,13 @@ with other elements of the process.
 
 .. seealso:: :class:`code.InteractiveConsole`
 """
-from __future__ import print_function, absolute_import
+from __future__ import print_function
 import sys
 from code import InteractiveConsole
 
 from gevent.greenlet import Greenlet
 from gevent.hub import getcurrent
 from gevent.server import StreamServer
-from gevent.pool import Pool
 
 __all__ = ['BackdoorServer']
 
@@ -29,10 +28,10 @@ try:
 except AttributeError:
     sys.ps2 = '... '
 
+
 class _Greenlet_stdreplace(Greenlet):
     # A greenlet that replaces sys.std[in/out/err] while running.
     _fileobj = None
-    saved = None
 
     def switch(self, *args, **kw):
         if self._fileobj is not None:
@@ -47,17 +46,11 @@ class _Greenlet_stdreplace(Greenlet):
         sys.stdin, sys.stderr, sys.stdout = self.saved
         self.saved = None
 
-    def throw(self, *args, **kwargs):
-        # pylint:disable=arguments-differ
-        if self.saved is None and self._fileobj is not None:
-            self.switch_in()
-        Greenlet.throw(self, *args, **kwargs)
-
     def run(self):
         try:
             return Greenlet.run(self)
         finally:
-            # Make sure to restore the originals.
+            # XXX why is this necessary?
             self.switch_out()
 
 
@@ -90,10 +83,6 @@ class BackdoorServer(StreamServer):
         Hello from gevent backdoor!
         >> print(foo)
         From defined scope!
-
-    .. versionchanged:: 1.2a1
-       Spawned greenlets are now tracked in a pool and killed when the server
-       is stopped.
     """
 
     def __init__(self, listener, locals=None, banner=None, **server_args):
@@ -102,8 +91,7 @@ class BackdoorServer(StreamServer):
             at the top-level.
         :keyword banner: If geven, a string that will be printed to each connecting user.
         """
-        group = Pool(greenlet_class=_Greenlet_stdreplace) # no limit on number
-        StreamServer.__init__(self, listener, spawn=group, **server_args)
+        StreamServer.__init__(self, listener, spawn=_Greenlet_stdreplace.spawn, **server_args)
         _locals = {'__doc__': None, '__name__': '__console__'}
         if locals:
             _locals.update(locals)
@@ -125,12 +113,12 @@ class BackdoorServer(StreamServer):
             import __builtin__
             _locals["__builtins__"] = __builtin__
         except ImportError:
-            import builtins # pylint:disable=import-error
+            import builtins
             _locals["builtins"] = builtins
             _locals['__builtins__'] = builtins
         return _locals
 
-    def handle(self, conn, _address): # pylint: disable=method-hidden
+    def handle(self, conn, address):
         """
         Interact with one remote user.
 
@@ -145,12 +133,7 @@ class BackdoorServer(StreamServer):
         getcurrent().switch_in()
         try:
             console = InteractiveConsole(self._create_interactive_locals())
-            if sys.version_info[:3] >= (3, 6, 0):
-                # Beginning in 3.6, the console likes to print "now exiting <class>"
-                # but probably our socket is already closed, so this just causes problems.
-                console.interact(banner=self.banner, exitmsg='') # pylint:disable=unexpected-keyword-arg
-            else:
-                console.interact(banner=self.banner)
+            console.interact(banner=self.banner)
         except SystemExit:  # raised by quit()
             if hasattr(sys, 'exc_clear'): # py2
                 sys.exc_clear()

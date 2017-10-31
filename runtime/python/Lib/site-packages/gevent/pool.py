@@ -76,11 +76,9 @@ class IMapUnordered(Greenlet):
             # redundant, and that lets us avoid having to use self.link() instead
             # of self.rawlink() to avoid having blocking methods called in the
             # hub greenlet.
-            factory = Semaphore
+            self._result_semaphore = Semaphore(maxsize)
         else:
-            factory = DummySemaphore
-        self._result_semaphore = factory(maxsize)
-
+            self._result_semaphore = DummySemaphore()
         self.count = 0
         self.finished = False
         # If the queue size is unbounded, then we want to call all
@@ -115,7 +113,7 @@ class IMapUnordered(Greenlet):
         g.rawlink(self._on_result)
         return g
 
-    def _run(self): # pylint:disable=method-hidden
+    def _run(self):
         try:
             func = self.func
             for item in self.iterable:
@@ -243,7 +241,7 @@ class GroupMappingMixin(object):
 
     def apply_cb(self, func, args=None, kwds=None, callback=None):
         """
-        :meth:`apply` the given *func(\\*args, \\*\\*kwds)*, and, if a *callback* is given, run it with the
+        :meth:`apply` the given *func*, and, if a *callback* is given, run it with the
         results of *func* (unless an exception was raised.)
 
         The *callback* may be called synchronously or asynchronously. If called
@@ -258,42 +256,18 @@ class GroupMappingMixin(object):
 
     def apply_async(self, func, args=None, kwds=None, callback=None):
         """
-        A variant of the :meth:`apply` method which returns a :class:`~.Greenlet` object.
-
-        When the returned greenlet gets to run, it *will* call :meth:`apply`,
-        passing in *func*, *args* and *kwds*.
+        A variant of the apply() method which returns a Greenlet object.
 
         If *callback* is specified, then it should be a callable which
         accepts a single argument. When the result becomes ready
         callback is applied to it (unless the call failed).
-
-        This method will never block, even if this group is full (that is,
-        even if :meth:`spawn` would block, this method will not).
-
-        .. caution:: The returned greenlet may or may not be tracked
-           as part of this group, so :meth:`joining <join>` this group is
-           not a reliable way to wait for the results to be available or
-           for the returned greenlet to run; instead, join the returned
-           greenlet.
-
-        .. tip:: Because :class:`~.ThreadPool` objects do not track greenlets, the returned
-           greenlet will never be a part of it. To reduce overhead and improve performance,
-           :class:`Group` and :class:`Pool` may choose to track the returned
-           greenlet. These are implementation details that may change.
         """
         if args is None:
             args = ()
         if kwds is None:
             kwds = {}
         if self._apply_async_use_greenlet():
-            # cannot call self.spawn() directly because it will block
-            # XXX: This is always the case for ThreadPool, but for Group/Pool
-            # of greenlets, this is only the case when they are full...hence
-            # the weasely language about "may or may not be tracked". Should we make
-            # Group/Pool always return true as well so it's never tracked by any
-            # implementation? That would simplify that logic, but could increase
-            # the total number of greenlets in the system and add a layer of
-            # overhead for the simple cases when the pool isn't full.
+            # cannot call spawn() directly because it will block
             return Greenlet.spawn(self.apply_cb, func, args, kwds, callback)
 
         greenlet = self.spawn(func, *args, **kwds)
@@ -322,7 +296,8 @@ class GroupMappingMixin(object):
             kwds = {}
         if self._apply_immediately():
             return func(*args, **kwds)
-        return self.spawn(func, *args, **kwds).get()
+        else:
+            return self.spawn(func, *args, **kwds).get()
 
     def map(self, func, iterable):
         """Return a list made by applying the *func* to each element of
@@ -372,7 +347,7 @@ class GroupMappingMixin(object):
         :keyword int maxsize: If given and not-None, specifies the maximum number of
             finished results that will be allowed to accumulate awaiting the reader;
             more than that number of results will cause map function greenlets to begin
-            to block. This is most useful if there is a great disparity in the speed of
+            to block. This is most useful is there is a great disparity in the speed of
             the mapping code and the consumer and the results consume a great deal of resources.
 
             .. note:: This is separate from any bound on the number of active parallel
@@ -539,25 +514,17 @@ class Group(GroupMappingMixin):
             one gets re-raised is not determined. Only greenlets currently
             in the group when this method is called are guaranteed to
             be checked for exceptions.
-
-        :return bool: A value indicating whether this group became empty.
-           If the timeout is specified and the group did not become empty
-           during that timeout, then this will be a false value. Otherwise
-           it will be a true value.
-
-        .. versionchanged:: 1.2a1
-           Add the return value.
         """
-        greenlets = list(self.greenlets) if raise_error else ()
-        result = self._empty_event.wait(timeout=timeout)
-
-        for greenlet in greenlets:
-            if greenlet.exception is not None:
-                if hasattr(greenlet, '_raise_exception'):
-                    greenlet._raise_exception()
-                raise greenlet.exception
-
-        return result
+        if raise_error:
+            greenlets = self.greenlets.copy()
+            self._empty_event.wait(timeout=timeout)
+            for greenlet in greenlets:
+                if greenlet.exception is not None:
+                    if hasattr(greenlet, '_raise_exception'):
+                        greenlet._raise_exception()
+                    raise greenlet.exception
+        else:
+            self._empty_event.wait(timeout=timeout)
 
     def kill(self, exception=GreenletExit, block=True, timeout=None):
         """
@@ -565,23 +532,23 @@ class Group(GroupMappingMixin):
         """
         timer = Timeout._start_new_or_dummy(timeout)
         try:
-            while self.greenlets:
-                for greenlet in list(self.greenlets):
-                    if greenlet in self.dying:
-                        continue
-                    try:
-                        kill = greenlet.kill
-                    except AttributeError:
-                        _kill(greenlet, exception)
-                    else:
-                        kill(exception, block=False)
-                    self.dying.add(greenlet)
-                if not block:
-                    break
-                joinall(self.greenlets)
-        except Timeout as ex:
-            if ex is not timer:
-                raise
+            try:
+                while self.greenlets:
+                    for greenlet in list(self.greenlets):
+                        if greenlet not in self.dying:
+                            try:
+                                kill = greenlet.kill
+                            except AttributeError:
+                                _kill(greenlet, exception)
+                            else:
+                                kill(exception, block=False)
+                            self.dying.add(greenlet)
+                    if not block:
+                        break
+                    joinall(self.greenlets)
+            except Timeout as ex:
+                if ex is not timer:
+                    raise
         finally:
             timer.cancel()
 
@@ -618,18 +585,14 @@ class Group(GroupMappingMixin):
 
     def _apply_immediately(self):
         # If apply() is called from one of our own
-        # worker greenlets, don't spawn a new one---if we're full, that
-        # could deadlock.
+        # worker greenlets, don't spawn a new one
         return getcurrent() in self
 
     def _apply_async_cb_spawn(self, callback, result):
         Greenlet.spawn(callback, result)
 
     def _apply_async_use_greenlet(self):
-        # cannot call self.spawn() because it will block, so
-        # use a fresh, untracked greenlet that when run will
-        # (indirectly) call self.spawn() for us.
-        return self.full()
+        return self.full() # cannot call self.spawn() because it will block
 
 
 class Failure(object):
@@ -675,10 +638,9 @@ class Pool(Group):
         if greenlet_class is not None:
             self.greenlet_class = greenlet_class
         if size is None:
-            factory = DummySemaphore
+            self._semaphore = DummySemaphore()
         else:
-            factory = Semaphore
-        self._semaphore = factory(size)
+            self._semaphore = Semaphore(size)
 
     def wait_available(self, timeout=None):
         """

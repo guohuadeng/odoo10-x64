@@ -50,7 +50,6 @@ class _ErrorFormatter(object):
         self.formatMessage = FormatMessage
         self.errorTab = errorTab
 
-    @classmethod
     def fromEnvironment(cls):
         """
         Get as many of the platform-specific error translation objects as
@@ -69,6 +68,7 @@ class _ErrorFormatter(object):
         except ImportError:
             errorTab = None
         return cls(WinError, FormatMessage, errorTab)
+    fromEnvironment = classmethod(fromEnvironment)
 
     def formatError(self, errorcode):
         """

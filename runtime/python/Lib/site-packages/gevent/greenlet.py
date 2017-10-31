@@ -1,33 +1,30 @@
 # Copyright (c) 2009-2012 Denis Bilenko. See LICENSE for details.
-from __future__ import absolute_import
+
 import sys
-from greenlet import greenlet
-from gevent._compat import PY3
-from gevent._compat import PYPY
-from gevent._compat import reraise
-from gevent._util import Lazy
-from gevent._tblib import dump_traceback
-from gevent._tblib import load_traceback
 from gevent.hub import GreenletExit
 from gevent.hub import InvalidSwitchError
+from gevent.hub import PY3
+from gevent.hub import PYPY
 from gevent.hub import Waiter
 from gevent.hub import get_hub
 from gevent.hub import getcurrent
+from gevent.hub import greenlet
 from gevent.hub import iwait
+from gevent.hub import reraise
 from gevent.hub import wait
 from gevent.timeout import Timeout
+from gevent._tblib import dump_traceback
+from gevent._tblib import load_traceback
 from collections import deque
 
 
-__all__ = [
-    'Greenlet',
-    'joinall',
-    'killall',
-]
+__all__ = ['Greenlet',
+           'joinall',
+           'killall']
 
 
 if PYPY:
-    import _continuation # pylint:disable=import-error
+    import _continuation
     _continulet = _continuation.continulet
 
 
@@ -87,10 +84,25 @@ class FailureSpawnedLink(SpawnedLink):
         if not source.successful():
             return SpawnedLink.__call__(self, source)
 
+
+class _lazy(object):
+
+    def __init__(self, func):
+        self.data = (func, func.__name__)
+
+    def __get__(self, inst, class_):
+        if inst is None:
+            return self
+
+        func, name = self.data
+        value = func(inst)
+        inst.__dict__[name] = value
+        return value
+
+
 class Greenlet(greenlet):
     """A light-weight cooperatively-scheduled execution unit.
     """
-    # pylint:disable=too-many-public-methods,too-many-instance-attributes
 
     value = None
     _exc_info = ()
@@ -148,7 +160,7 @@ class Greenlet(greenlet):
     def kwargs(self):
         return self._kwargs or {}
 
-    @Lazy
+    @_lazy
     def _links(self):
         return deque()
 
@@ -276,29 +288,27 @@ class Greenlet(greenlet):
             result += ': ' + formatted
         return result + '>'
 
-    _formatted_info = None
-
     def _formatinfo(self):
-        info = self._formatted_info
-        if info is not None:
-            return info
-
+        try:
+            return self._formatted_info
+        except AttributeError:
+            pass
         try:
             result = getfuncname(self.__dict__['_run'])
-        except Exception: # pylint:disable=broad-except
-            # Don't cache
-            return ''
-
-        args = []
-        if self.args:
-            args = [repr(x)[:50] for x in self.args]
-        if self._kwargs:
-            args.extend(['%s=%s' % (key, repr(value)[:50]) for (key, value) in self._kwargs.items()])
-        if args:
-            result += '(' + ', '.join(args) + ')'
-        # it is important to save the result here, because once the greenlet exits '_run' attribute will be removed
-        self._formatted_info = result
-        return result
+        except Exception:
+            pass
+        else:
+            args = []
+            if self.args:
+                args = [repr(x)[:50] for x in self.args]
+            if self._kwargs:
+                args.extend(['%s=%s' % (key, repr(value)[:50]) for (key, value) in self._kwargs.items()])
+            if args:
+                result += '(' + ', '.join(args) + ')'
+            # it is important to save the result here, because once the greenlet exits '_run' attribute will be removed
+            self._formatted_info = result
+            return result
+        return ''
 
     @property
     def exception(self):
@@ -309,16 +319,10 @@ class Greenlet(greenlet):
 
     @property
     def exc_info(self):
-        """
-        Holds the exc_info three-tuple raised by the function if the
-        greenlet finished with an error. Otherwise a false value.
-
-        .. note:: This is a provisional API and may change.
-
-        .. versionadded:: 1.1
-        """
+        """Holds the exc_info three-tuple raised by the function if the greenlet finished with an error.
+        Otherwise a false value."""
         e = self._exc_info
-        if e and e[0] is not None:
+        if e:
             return (e[0], e[1], load_traceback(e[2]))
 
     def throw(self, *args):
@@ -412,12 +416,6 @@ class Greenlet(greenlet):
             <gevent.sleep>`; an example where the exception is raised
             immediately is if this greenlet had called
             :func:`sleep(0.1) <gevent.sleep>`.
-
-        .. caution::
-
-            Use care when killing greenlets. If the code executing is not
-            exception safe (e.g., makes proper use of ``finally``) then an
-            unexpected exception could result in corrupted state.
 
         See also :func:`gevent.kill`.
 
@@ -534,7 +532,7 @@ class Greenlet(greenlet):
 
             try:
                 result = self._run(*self.args, **self.kwargs)
-            except: # pylint:disable=bare-except
+            except:
                 self._report_error(sys.exc_info())
                 return
             self._report_result(result)
@@ -550,8 +548,6 @@ class Greenlet(greenlet):
             Previously, if no callable object was passed to the constructor, the spawned greenlet would
             later fail with an AttributeError.
         """
-        # We usually override this in __init__
-        # pylint: disable=method-hidden
         return
 
     def rawlink(self, callback):
@@ -563,50 +559,39 @@ class Greenlet(greenlet):
         """
         if not callable(callback):
             raise TypeError('Expected callable: %r' % (callback, ))
-        self._links.append(callback) # pylint:disable=no-member
+        self._links.append(callback)
         if self.ready() and self._links and not self._notifier:
             self._notifier = self.parent.loop.run_callback(self._notify_links)
 
     def link(self, callback, SpawnedLink=SpawnedLink):
-        """
-        Link greenlet's completion to a callable.
+        """Link greenlet's completion to a callable.
 
-        The *callback* will be called with this instance as an
-        argument once this greenlet is dead. A callable is called in
-        its own :class:`greenlet.greenlet` (*not* a
-        :class:`Greenlet`).
+        The *callback* will be called with this instance as an argument
+        once this greenlet's dead. A callable is called in its own greenlet.
         """
-        # XXX: Is the redefinition of SpawnedLink supposed to just be an
-        # optimization, or do people use it? It's not documented
-        # pylint:disable=redefined-outer-name
         self.rawlink(SpawnedLink(callback))
 
     def unlink(self, callback):
         """Remove the callback set by :meth:`link` or :meth:`rawlink`"""
         try:
-            self._links.remove(callback) # pylint:disable=no-member
+            self._links.remove(callback)
         except ValueError:
             pass
 
     def link_value(self, callback, SpawnedLink=SuccessSpawnedLink):
-        """
-        Like :meth:`link` but *callback* is only notified when the greenlet
-        has completed successfully.
-        """
-        # pylint:disable=redefined-outer-name
+        """Like :meth:`link` but *callback* is only notified when the greenlet has completed successfully."""
         self.link(callback, SpawnedLink=SpawnedLink)
 
     def link_exception(self, callback, SpawnedLink=FailureSpawnedLink):
         """Like :meth:`link` but *callback* is only notified when the greenlet dies because of an unhandled exception."""
-        # pylint:disable=redefined-outer-name
         self.link(callback, SpawnedLink=SpawnedLink)
 
     def _notify_links(self):
         while self._links:
-            link = self._links.popleft() # pylint:disable=no-member
+            link = self._links.popleft()
             try:
                 link(self)
-            except: # pylint:disable=bare-except
+            except:
                 self.parent.handle_error((link, self), *sys.exc_info())
 
 
@@ -617,21 +602,18 @@ class _dummy_event(object):
     def stop(self):
         pass
 
-    def start(self, cb): # pylint:disable=unused-argument
-        raise AssertionError("Cannot start the dummy event")
-
 
 _cancelled_start_event = _dummy_event()
 _start_completed_event = _dummy_event()
 del _dummy_event
 
 
-def _kill(glet, exception, waiter):
+def _kill(greenlet, exception, waiter):
     try:
-        glet.throw(exception)
-    except: # pylint:disable=bare-except
+        greenlet.throw(exception)
+    except:
         # XXX do we need this here?
-        glet.parent.handle_error(glet, *sys.exc_info())
+        greenlet.parent.handle_error(greenlet, *sys.exc_info())
     if waiter is not None:
         waiter.switch()
 
@@ -665,7 +647,7 @@ def _killall3(greenlets, exception, waiter):
         if not g.dead:
             try:
                 g.throw(exception)
-            except: # pylint:disable=bare-except
+            except:
                 g.parent.handle_error(g, *sys.exc_info())
             if not g.dead:
                 diehards.append(g)
@@ -677,16 +659,13 @@ def _killall(greenlets, exception):
         if not g.dead:
             try:
                 g.throw(exception)
-            except: # pylint:disable=bare-except
+            except:
                 g.parent.handle_error(g, *sys.exc_info())
 
 
 def killall(greenlets, exception=GreenletExit, block=True, timeout=None):
     """
     Forceably terminate all the ``greenlets`` by causing them to raise ``exception``.
-
-    .. caution:: Use care when killing greenlets. If they are not prepared for exceptions,
-       this could result in corrupted state.
 
     :param greenlets: A **bounded** iterable of the non-None greenlets to terminate.
        *All* the items in this iterable must be greenlets that belong to the same thread.

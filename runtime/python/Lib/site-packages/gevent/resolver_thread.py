@@ -3,8 +3,7 @@
 Native thread-based hostname resolver.
 """
 import _socket
-from gevent._compat import text_type
-from gevent.hub import get_hub
+from gevent.hub import get_hub, text_type
 
 
 __all__ = ['Resolver']

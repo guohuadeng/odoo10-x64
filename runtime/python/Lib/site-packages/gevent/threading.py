@@ -1,54 +1,26 @@
-"""
-Implementation of the standard :mod:`threading` using greenlets.
-
-.. note::
-
-    This module is a helper for :mod:`gevent.monkey` and is not
-    intended to be used directly. For spawning greenlets in your
-    applications, prefer higher level constructs like
-    :class:`gevent.Greenlet` class or :func:`gevent.spawn`.
-"""
 from __future__ import absolute_import
 
 
-__implements__ = [
-    'local',
-    '_start_new_thread',
-    '_allocate_lock',
-    'Lock',
-    '_get_ident',
-    '_sleep',
-    '_DummyThread',
-]
+__implements__ = ['local',
+                  '_start_new_thread',
+                  '_allocate_lock',
+                  'Lock',
+                  '_get_ident',
+                  '_sleep',
+                  '_DummyThread']
 
 
 import threading as __threading__
 _DummyThread_ = __threading__._DummyThread
 from gevent.local import local
 from gevent.thread import start_new_thread as _start_new_thread, allocate_lock as _allocate_lock, get_ident as _get_ident
-from gevent._compat import PYPY
-from gevent.hub import sleep as _sleep, getcurrent
-
-# Exports, prevent unused import warnings
-local = local
-start_new_thread = _start_new_thread
-allocate_lock = _allocate_lock
-_get_ident = _get_ident
-_sleep = _sleep
-getcurrent = getcurrent
-
+from gevent.hub import sleep as _sleep, getcurrent, PYPY
 Lock = _allocate_lock
 
 
 def _cleanup(g):
     __threading__._active.pop(id(g), None)
 
-def _make_cleanup_id(gid):
-    def _(_r):
-        __threading__._active.pop(gid, None)
-    return _
-
-_weakref = None
 
 class _DummyThread(_DummyThread_):
     # We avoid calling the superclass constructor. This makes us about
@@ -89,29 +61,18 @@ class _DummyThread(_DummyThread_):
     _tstate_lock = None
 
     def __init__(self):
-        #_DummyThread_.__init__(self) # pylint:disable=super-init-not-called
+        #_DummyThread_.__init__(self)
 
         # It'd be nice to use a pattern like "greenlet-%d", but maybe somebody out
         # there is checking thread names...
         self._name = self._Thread__name = __threading__._newname("DummyThread-%d")
         self._set_ident()
 
+        __threading__._active[_get_ident()] = self
         g = getcurrent()
-        gid = _get_ident(g) # same as id(g)
-        __threading__._active[gid] = self
         rawlink = getattr(g, 'rawlink', None)
         if rawlink is not None:
-            # raw greenlet.greenlet greenlets don't
-            # have rawlink...
             rawlink(_cleanup)
-        else:
-            # ... so for them we use weakrefs.
-            # See https://github.com/gevent/gevent/issues/918
-            global _weakref
-            if _weakref is None:
-                _weakref = __import__('weakref')
-            ref = _weakref.ref(g, _make_cleanup_id(gid))
-            self.__raw_ref = ref
 
     def _Thread__stop(self):
         pass
@@ -119,34 +80,20 @@ class _DummyThread(_DummyThread_):
     _stop = _Thread__stop # py3
 
     def _wait_for_tstate_lock(self, *args, **kwargs):
-        # pylint:disable=arguments-differ
         pass
-
-if hasattr(__threading__, 'main_thread'): # py 3.4+
-    def main_native_thread():
-        return __threading__.main_thread() # pylint:disable=no-member
-else:
-    _main_threads = [(_k, _v) for _k, _v in __threading__._active.items()
-                     if isinstance(_v, __threading__._MainThread)]
-    assert len(_main_threads) == 1, "Too many main threads"
-
-    def main_native_thread():
-        return _main_threads[0][1]
 
 # Make sure the MainThread can be found by our current greenlet ID,
 # otherwise we get a new DummyThread, which cannot be joined.
 # Fixes tests in test_threading_2 under PyPy, and generally makes things nicer
 # when gevent.threading is imported before monkey patching or not at all
-# XXX: This assumes that the import is happening in the "main" greenlet/thread.
-# XXX: We should really only be doing this from gevent.monkey.
-if _get_ident() not in __threading__._active:
-    _v = main_native_thread()
-    _k = _v.ident
-    del __threading__._active[_k]
-    _v._ident = _v._Thread__ident = _get_ident()
-    __threading__._active[_get_ident()] = _v
-    del _k
-    del _v
+# XXX: This assumes that the import is happening in the "main" greenlet
+if _get_ident() not in __threading__._active and len(__threading__._active) == 1:
+    k, v = next(iter(__threading__._active.items()))
+    del __threading__._active[k]
+    v._Thread__ident = _get_ident()
+    __threading__._active[_get_ident()] = v
+    del k
+    del v
 
     # Avoid printing an error on shutdown trying to remove the thread entry
     # we just replaced if we're not fully monkey patched in
@@ -154,7 +101,6 @@ if _get_ident() not in __threading__._active:
     # defines __delitem__, shutdown hangs. Maybe due to something with the GC?
     # XXX: This may be fixed in 2.6.1+
     if not PYPY:
-        # pylint:disable=no-member
         _MAIN_THREAD = __threading__._get_ident() if hasattr(__threading__, '_get_ident') else __threading__.get_ident()
 
         class _active(dict):
@@ -203,7 +149,6 @@ if sys.version_info[:2] >= (3, 4):
             self._greenlet.join(timeout=timeout)
 
         def _wait_for_tstate_lock(self, *args, **kwargs):
-            # pylint:disable=arguments-differ
             raise NotImplementedError()
 
     __implements__.append('Thread')

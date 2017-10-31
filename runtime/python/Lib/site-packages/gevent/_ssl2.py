@@ -8,12 +8,12 @@ This module implements cooperative SSL socket wrappers.
 """
 
 from __future__ import absolute_import
-# Our import magic sadly makes this warning useless
-# pylint: disable=undefined-variable,arguments-differ,no-member
-
 import ssl as __ssl__
 
-_ssl = __ssl__._ssl
+try:
+    _ssl = __ssl__._ssl
+except AttributeError:
+    _ssl = __ssl__._ssl2
 
 import sys
 import errno
@@ -21,8 +21,13 @@ from gevent._socket2 import socket
 from gevent.socket import _fileobject, timeout_default
 from gevent.socket import error as socket_error, EWOULDBLOCK
 from gevent.socket import timeout as _socket_timeout
-from gevent._compat import PYPY
-from gevent._util import copy_globals
+from gevent.hub import string_types, PYPY
+
+try:
+    long
+except NameError:
+    # Make us importable under Py3k for documentation
+    long = int
 
 
 __implements__ = ['SSLSocket',
@@ -30,18 +35,34 @@ __implements__ = ['SSLSocket',
                   'get_server_certificate',
                   'sslwrap_simple']
 
-# Import all symbols from Python's ssl.py, except those that we are implementing
-# and "private" symbols.
-__imports__ = copy_globals(__ssl__, globals(),
-                           # SSLSocket *must* subclass gevent.socket.socket; see issue 597
-                           names_to_ignore=__implements__ + ['socket'],
-                           dunder_names_to_keep=())
+__imports__ = ['SSLError',
+               'RAND_status',
+               'RAND_egd',
+               'RAND_add',
+               'cert_time_to_seconds',
+               'get_protocol_name',
+               'DER_cert_to_PEM_cert',
+               'PEM_cert_to_DER_cert']
 
+for name in __imports__[:]:
+    try:
+        value = getattr(__ssl__, name)
+        globals()[name] = value
+    except AttributeError:
+        __imports__.remove(name)
+
+for name in dir(__ssl__):
+    if not name.startswith('_'):
+        value = getattr(__ssl__, name)
+        if isinstance(value, (int, long, tuple)) or isinstance(value, string_types):
+            globals()[name] = value
+            __imports__.append(name)
+
+del name, value
 
 # Py2.6 can get RAND_status added twice
 __all__ = list(set(__implements__) | set(__imports__))
-if 'namedtuple' in __all__:
-    __all__.remove('namedtuple')
+
 
 class SSLSocket(socket):
     """
@@ -146,7 +167,8 @@ class SSLSocket(socket):
     def cipher(self):
         if not self._sslobj:
             return None
-        return self._sslobj.cipher()
+        else:
+            return self._sslobj.cipher()
 
     def send(self, data, flags=0, timeout=timeout_default):
         if timeout is timeout_default:
@@ -252,7 +274,8 @@ class SSLSocket(socket):
     def pending(self):
         if self._sslobj:
             return self._sslobj.pending()
-        return 0
+        else:
+            return 0
 
     def _sslobj_shutdown(self):
         while True:
@@ -417,7 +440,8 @@ def get_server_certificate(addr, ssl_version=PROTOCOL_SSLv23, ca_certs=None):
     If 'ca_certs' is specified, validate the server cert against it.
     If 'ssl_version' is specified, use it in the connection attempt."""
 
-    if ca_certs is not None:
+    host, port = addr
+    if (ca_certs is not None):
         cert_reqs = CERT_REQUIRED
     else:
         cert_reqs = CERT_NONE

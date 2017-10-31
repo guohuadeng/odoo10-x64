@@ -2,17 +2,11 @@
 """Locking primitives"""
 from __future__ import absolute_import
 
-from gevent.hub import getcurrent
-from gevent._compat import PYPY
-from gevent._semaphore import Semaphore, BoundedSemaphore # pylint:disable=no-name-in-module,import-error
+from gevent.hub import getcurrent, PYPY
+from gevent._semaphore import Semaphore, BoundedSemaphore
 
 
-__all__ = [
-    'Semaphore',
-    'DummySemaphore',
-    'BoundedSemaphore',
-    'RLock',
-]
+__all__ = ['Semaphore', 'DummySemaphore', 'BoundedSemaphore', 'RLock']
 
 # On PyPy, we don't compile the Semaphore class with Cython. Under
 # Cython, each individual method holds the GIL for its entire
@@ -23,38 +17,9 @@ __all__ = [
 # to use locks *other* than the one being traced.)
 if PYPY:
     # TODO: Need to use monkey.get_original?
-    try:
-        from _thread import allocate_lock as _allocate_lock # pylint:disable=import-error,useless-suppression
-        from _thread import get_ident as _get_ident # pylint:disable=import-error,useless-suppression
-    except ImportError:
-        # Python 2
-        from thread import allocate_lock as _allocate_lock # pylint:disable=import-error,useless-suppression
-        from thread import get_ident as _get_ident # pylint:disable=import-error,useless-suppression
+    from thread import allocate_lock as _allocate_lock
+    from thread import get_ident as _get_ident
     _sem_lock = _allocate_lock()
-
-    def untraceable(f):
-        # Don't allow re-entry to these functions in a single thread, as can
-        # happen if a sys.settrace is used
-        def wrapper(self):
-            me = _get_ident()
-            try:
-                count = self._locking[me]
-            except KeyError:
-                count = self._locking[me] = 1
-            else:
-                count = self._locking[me] = count + 1
-            if count:
-                return
-
-            try:
-                return f(self)
-            finally:
-                count = count - 1
-                if not count:
-                    del self._locking[me]
-                else:
-                    self._locking[me] = count
-        return wrapper
 
     class _OwnedLock(object):
 
@@ -63,6 +28,30 @@ if PYPY:
             self._block = _allocate_lock()
             self._locking = {}
             self._count = 0
+
+        def untraceable(f):
+            # Don't allow re-entry to these functions in a single thread, as can
+            # happen if a sys.settrace is used
+            def wrapper(self):
+                me = _get_ident()
+                try:
+                    count = self._locking[me]
+                except KeyError:
+                    count = self._locking[me] = 1
+                else:
+                    count = self._locking[me] = count + 1
+                if count:
+                    return
+
+                try:
+                    return f(self)
+                finally:
+                    count = count - 1
+                    if not count:
+                        del self._locking[me]
+                    else:
+                        self._locking[me] = count
+            return wrapper
 
         @untraceable
         def acquire(self):
@@ -86,11 +75,8 @@ if PYPY:
     # on exit. acquire and wait can call _do_wait, which must release it on entry
     # and re-acquire it for them on exit.
     class _around(object):
-        __slots__ = ('before', 'after')
-
-        def __init__(self, before, after):
-            self.before = before
-            self.after = after
+        before = None
+        after = None
 
         def __enter__(self):
             self.before()
@@ -114,15 +100,17 @@ if PYPY:
 
     def __init__(self, *args, **kwargs):
         l = self._lock_lock = _OwnedLock()
-        self._lock_locked = _around(l.acquire, l.release)
-        self._lock_unlocked = _around(l.release, l.acquire)
-
+        self._lock_locked = _around()
+        self._lock_locked.before = l.acquire
+        self._lock_locked.after = l.release
+        self._lock_unlocked = _around()
+        self._lock_unlocked.before = l.release
+        self._lock_unlocked.after = l.acquire
         _Sem_init(self, *args, **kwargs)
 
     Semaphore.__init__ = __init__
 
     del _decorate
-    del untraceable
 
 
 class DummySemaphore(object):
@@ -190,7 +178,6 @@ class DummySemaphore(object):
         .. versionchanged:: 1.1a1
            Always return *true*.
         """
-        # pylint:disable=unused-argument
         return True
 
     def __enter__(self):

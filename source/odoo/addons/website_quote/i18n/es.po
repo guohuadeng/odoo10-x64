@@ -422,6 +422,9 @@ msgid ""
 " This description will be copied to every Sale Order, Delivery Order and "
 "Customer Invoice/Refund"
 msgstr ""
+"Una descripción del producto que quiera comunicar a sus clientes. Esta "
+"descripción se copiará a cada pedido de venta, albarán de salida y factura "
+"de cliente."
 
 #. module: website_quote
 #: model:sale.quote.template,website_description:website_quote.website_quote_template_default
@@ -712,7 +715,7 @@ msgstr "Descripción"
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_website_description
 msgid "Description for Online Quotations"
-msgstr ""
+msgstr "Descripción para los pedidos online"
 
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_quote_description
@@ -1899,10 +1902,10 @@ msgid ""
 "                        practices, delivers sales training and is your direct\n"
 "                        point of contact for any request you may have."
 msgstr ""
-"Le asignaremos un gestor financiero dedicado y un\n"
-"vendedor experimentado, para ayudarle a desarrollar\n"
-"su negocio con Odoo. El gestor financiero le ayuda a\n"
-"crear iniciativas, cerrar ofertas, le aporta feedback y buenas\n"
+"Le asignaremos un gestor dedicado y un\n"
+"comercial experimentado, para ayudarle a desarrollar\n"
+"su negocio con Odoo. El gestor le ayuda a crear iniciativas,\n"
+"cerrar ofertas, le aporta retroalimentación y buenas\n"
 "prácticas, ofrece formación en ventas y es su punto de\n"
 "contacto directo para cualquier necesidad que pueda tener."
 

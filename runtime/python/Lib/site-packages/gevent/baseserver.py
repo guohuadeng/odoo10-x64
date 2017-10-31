@@ -5,8 +5,7 @@ import _socket
 import errno
 from gevent.greenlet import Greenlet
 from gevent.event import Event
-from gevent.hub import get_hub
-from gevent._compat import string_types, integer_types, xrange
+from gevent.hub import string_types, integer_types, get_hub, xrange
 
 
 __all__ = ['BaseServer']
@@ -45,8 +44,7 @@ class BaseServer(object):
         :meth:`set_handle`.
 
         When the request handler returns, the socket used for the
-        request will be closed. Therefore, the handler must not return if
-        the socket is still in use (for example, by manually spawned greenlets).
+        request will be closed.
 
     :keyword spawn: If provided, is called to create a new
         greenlet to run the handler. By default,
@@ -68,8 +66,6 @@ class BaseServer(object):
        closing of the socket, fixing ResourceWarnings under Python 3 and PyPy.
 
     """
-    # pylint: disable=too-many-instance-attributes,bare-except,broad-except
-
     #: the number of seconds to sleep in case there was an error in accept() call
     #: for consecutive errors the delay will double until it reaches max_delay
     #: when accept() finally succeeds the delay will be reset to min_delay again
@@ -96,10 +92,6 @@ class BaseServer(object):
         self._stop_event.set()
         self._watcher = None
         self._timer = None
-        self._handle = None
-        # XXX: FIXME: Subclasses rely on the presence or absence of the
-        # `socket` attribute to determine whether we are open/should be opened.
-        # Instead, have it be None.
         self.pool = None
         try:
             self.set_listener(listener)
@@ -185,9 +177,6 @@ class BaseServer(object):
     def do_close(self, *args):
         pass
 
-    def do_read(self):
-        raise NotImplementedError()
-
     def _do_read(self):
         for _ in xrange(self.max_accept):
             if self.full():
@@ -224,8 +213,6 @@ class BaseServer(object):
                     break
 
     def full(self):
-        # copied from self.pool
-        # pylint: disable=method-hidden
         return False
 
     def __repr__(self):
@@ -376,23 +363,22 @@ def _extract_family(host):
 
 def _parse_address(address):
     if isinstance(address, tuple):
-        if not address[0] or ':' in address[0]:
+        if ':' in address[0]:
             return _socket.AF_INET6, address
         return _socket.AF_INET, address
-
-    if ((isinstance(address, string_types) and ':' not in address)
-            or isinstance(address, integer_types)): # noqa (pep8 E129)
-        # Just a port
-        return _socket.AF_INET6, ('', int(address))
-
-    if not isinstance(address, string_types):
+    elif isinstance(address, string_types):
+        if ':' in address:
+            host, port = address.rsplit(':', 1)
+            family, host = _extract_family(host)
+            if host == '*':
+                host = ''
+            return family, (host, int(port))
+        else:
+            return _socket.AF_INET, ('', int(address))
+    elif isinstance(address, integer_types):
+        return _socket.AF_INET, ('', int(address))
+    else:
         raise TypeError('Expected tuple or string, got %s' % type(address))
-
-    host, port = address.rsplit(':', 1)
-    family, host = _extract_family(host)
-    if host == '*':
-        host = ''
-    return family, (host, int(port))
 
 
 def parse_address(address):

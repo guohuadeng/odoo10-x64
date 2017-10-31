@@ -2,83 +2,71 @@
 from __future__ import absolute_import
 
 # standard functions and classes that this module re-implements in a gevent-aware way:
-_implements = [
-    'create_connection',
-    'socket',
-    'SocketType',
-    'fromfd',
-    'socketpair',
-]
+_implements = ['create_connection',
+               'socket',
+               'SocketType',
+               'fromfd',
+               'socketpair']
 
-__dns__ = [
-    'getaddrinfo',
-    'gethostbyname',
-    'gethostbyname_ex',
-    'gethostbyaddr',
-    'getnameinfo',
-    'getfqdn',
-]
+__dns__ = ['getaddrinfo',
+           'gethostbyname',
+           'gethostbyname_ex',
+           'gethostbyaddr',
+           'getnameinfo',
+           'getfqdn']
 
 _implements += __dns__
 
 # non-standard functions that this module provides:
-__extensions__ = [
-    'cancel_wait',
-    'wait_read',
-    'wait_write',
-    'wait_readwrite',
-]
+__extensions__ = ['cancel_wait',
+                  'wait_read',
+                  'wait_write',
+                  'wait_readwrite']
 
 # standard functions and classes that this module re-imports
-__imports__ = [
-    'error',
-    'gaierror',
-    'herror',
-    'htonl',
-    'htons',
-    'ntohl',
-    'ntohs',
-    'inet_aton',
-    'inet_ntoa',
-    'inet_pton',
-    'inet_ntop',
-    'timeout',
-    'gethostname',
-    'getprotobyname',
-    'getservbyname',
-    'getservbyport',
-    'getdefaulttimeout',
-    'setdefaulttimeout',
-    # Windows:
-    'errorTab',
-]
+__imports__ = ['error',
+               'gaierror',
+               'herror',
+               'htonl',
+               'htons',
+               'ntohl',
+               'ntohs',
+               'inet_aton',
+               'inet_ntoa',
+               'inet_pton',
+               'inet_ntop',
+               'timeout',
+               'gethostname',
+               'getprotobyname',
+               'getservbyname',
+               'getservbyport',
+               'getdefaulttimeout',
+               'setdefaulttimeout',
+               # Windows:
+               'errorTab',
+               ]
 
-__py3_imports__ = [
-    # Python 3
-    'AddressFamily',
-    'SocketKind',
-    'CMSG_LEN',
-    'CMSG_SPACE',
-    'dup',
-    'if_indextoname',
-    'if_nameindex',
-    'if_nametoindex',
-    'sethostname',
-]
+__py3_imports__ = [# Python 3
+                   'AddressFamily',
+                   'SocketKind',
+                   'CMSG_LEN',
+                   'CMSG_SPACE',
+                   'dup',
+                   'if_indextoname',
+                   'if_nameindex',
+                   'if_nametoindex',
+                   'sethostname']
 
 __imports__.extend(__py3_imports__)
 
 
 import sys
-from gevent.hub import get_hub
+from gevent.hub import get_hub, string_types, integer_types
 from gevent.hub import ConcurrentObjectUseError
 from gevent.timeout import Timeout
-from gevent._compat import string_types, integer_types, PY3
-from gevent._util import copy_globals
-from gevent._util import _NONE
 
 is_windows = sys.platform == 'win32'
-# pylint:disable=no-name-in-module,unused-import
+
 if is_windows:
     # no such thing as WSAEPERM or error code 10001 according to winsock.h or MSDN
     from errno import WSAEINVAL as EINVAL
@@ -106,20 +94,30 @@ import _socket
 _realsocket = _socket.socket
 import socket as __socket__
 
-_name = _value = None
-__imports__ = copy_globals(__socket__, globals(),
-                           only_names=__imports__,
-                           ignore_missing_names=True)
 
-for _name in __socket__.__all__:
-    _value = getattr(__socket__, _name)
-    if isinstance(_value, (integer_types, string_types)):
-        globals()[_name] = _value
-        __imports__.append(_name)
+for name in __imports__[:]:
+    try:
+        value = getattr(__socket__, name)
+        globals()[name] = value
+    except AttributeError:
+        __imports__.remove(name)
 
-del _name, _value
+for name in __socket__.__all__:
+    value = getattr(__socket__, name)
+    if isinstance(value, integer_types) or isinstance(value, string_types):
+        globals()[name] = value
+        __imports__.append(name)
 
-_timeout_error = timeout # pylint: disable=undefined-variable
+del name, value
+
+
+class _NONE(object):
+
+    def __repr__(self):
+        return "<default value>"
+
+_NONE = _NONE()
+_timeout_error = timeout
 
 
 def wait(io, timeout=None, timeout_exc=_NONE):
@@ -181,7 +179,6 @@ def wait_write(fileno, timeout=None, timeout_exc=_NONE, event=_NONE):
 
     .. seealso:: :func:`cancel_wait`
     """
-    # pylint:disable=unused-argument
     io = get_hub().loop.io(fileno, 2)
     return wait(io, timeout, timeout_exc)
 
@@ -199,16 +196,11 @@ def wait_readwrite(fileno, timeout=None, timeout_exc=_NONE, event=_NONE):
 
     .. seealso:: :func:`cancel_wait`
     """
-    # pylint:disable=unused-argument
     io = get_hub().loop.io(fileno, 3)
     return wait(io, timeout, timeout_exc)
 
 #: The exception raised by default on a call to :func:`cancel_wait`
-class cancel_wait_ex(error): # pylint: disable=undefined-variable
-    def __init__(self):
-        super(cancel_wait_ex, self).__init__(
-            EBADF,
-            'File descriptor was closed in another greenlet')
+cancel_wait_ex = error(EBADF, 'File descriptor was closed in another greenlet')
 
 
 def cancel_wait(watcher, error=cancel_wait_ex):
@@ -275,24 +267,10 @@ def getaddrinfo(host, port, family=0, socktype=0, proto=0, flags=0):
     """
     return get_hub().resolver.getaddrinfo(host, port, family, socktype, proto, flags)
 
-if PY3:
-    # The name of the socktype param changed to type in Python 3.
-    # See https://github.com/gevent/gevent/issues/960
-    # Using inspect here to directly detect the condition is painful because we have to
-    # wrap it with a try/except TypeError because not all Python 2
-    # versions can get the args of a builtin; we also have to use a with to suppress
-    # the deprecation warning.
-    d = getaddrinfo.__doc__
-
-    def getaddrinfo(host, port, family=0, type=0, proto=0, flags=0): # pylint:disable=function-redefined
-        return get_hub().resolver.getaddrinfo(host, port, family, type, proto, flags)
-    getaddrinfo.__doc__ = d
-    del d
-
 
 def gethostbyaddr(ip_address):
     """
-    gethostbyaddr(ip_address) -> (name, aliaslist, addresslist)
+    gethostbyaddr(host) -> (name, aliaslist, addresslist)
 
     Return the true host name, a list of aliases, and a list of IP addresses,
     for a host.  The host argument is a string giving a host name or IP number.
@@ -322,17 +300,16 @@ def getfqdn(name=''):
     possibly existing aliases. In case no FQDN is available, hostname
     from gethostname() is returned.
     """
-    # pylint: disable=undefined-variable
     name = name.strip()
     if not name or name == '0.0.0.0':
         name = gethostname()
     try:
-        hostname, aliases, _ = gethostbyaddr(name)
+        hostname, aliases, ipaddrs = gethostbyaddr(name)
     except error:
         pass
     else:
         aliases.insert(0, hostname)
-        for name in aliases: # EWW! pylint:disable=redefined-argument-from-local
+        for name in aliases:
             if isinstance(name, bytes):
                 if b'.' in name:
                     break

@@ -9,9 +9,6 @@ created for each request. The server can be customized to use
 different subclasses of :class:`WSGIHandler`.
 
 """
-# FIXME: Can we refactor to make smallor?
-# pylint:disable=too-many-lines
-
 import errno
 from io import BytesIO
 import string
@@ -23,13 +20,12 @@ from datetime import datetime
 try:
     from urllib import unquote
 except ImportError:
-    from urllib.parse import unquote # python 2 pylint:disable=import-error,no-name-in-module
+    from urllib.parse import unquote
 
 from gevent import socket
 import gevent
 from gevent.server import StreamServer
-from gevent.hub import GreenletExit
-from gevent._compat import PY3, reraise
+from gevent.hub import GreenletExit, PY3, reraise
 
 from functools import partial
 if PY3:
@@ -43,9 +39,6 @@ __all__ = [
     'WSGIServer',
     'WSGIHandler',
     'LoggingLogAdapter',
-    'Environ',
-    'SecureEnviron',
-    'WSGISecureEnviron',
 ]
 
 
@@ -113,7 +106,6 @@ class Input(object):
                  'chunked_input', 'chunk_length', '_chunked_input_error')
 
     def __init__(self, rfile, content_length, socket=None, chunked_input=False):
-        # pylint:disable=redefined-outer-name
         self.rfile = rfile
         self.content_length = content_length
         self.socket = socket
@@ -258,7 +250,6 @@ class Input(object):
             return int(buf.getvalue(), 16)
 
     def _chunked_read(self, length=None, use_readline=False):
-        # pylint:disable=too-many-branches
         rfile = self.rfile
         self._send_100_continue()
 
@@ -317,10 +308,10 @@ class Input(object):
     def readline(self, size=None):
         if self.chunked_input:
             return self._chunked_read(size, True)
-        return self._do_read(size, use_readline=True)
+        else:
+            return self._do_read(size, use_readline=True)
 
     def readlines(self, hint=None):
-        # pylint:disable=unused-argument
         return list(self)
 
     def __iter__(self):
@@ -339,11 +330,11 @@ try:
     headers_factory = mimetools.Message
 except ImportError:
     # adapt Python 3 HTTP headers to old API
-    from http import client # pylint:disable=import-error
+    from http import client
 
     class OldMessage(client.HTTPMessage):
         def __init__(self, **kwargs):
-            super(client.HTTPMessage, self).__init__(**kwargs) # pylint:disable=bad-super-call
+            super().__init__(**kwargs)
             self.status = ''
 
         def getheader(self, name, default=None):
@@ -358,7 +349,7 @@ except ImportError:
         def typeheader(self):
             return self.get('content-type')
 
-    def headers_factory(fp, *args): # pylint:disable=unused-argument
+    def headers_factory(fp, *args):
         try:
             ret = client.parse_headers(fp, _class=OldMessage)
         except client.LineTooLong:
@@ -382,8 +373,6 @@ class WSGIHandler(object):
     itself. The application and environment are obtained from the server.
 
     """
-    # pylint:disable=too-many-instance-attributes
-
     protocol_version = 'HTTP/1.1'
     if PY3:
         # if we do like Py2, then headers_factory unconditionally
@@ -423,17 +412,17 @@ class WSGIHandler(object):
     command = None # str: 'GET'
     path = None # str: '/'
 
-    def __init__(self, sock, address, server, rfile=None):
+    def __init__(self, socket, address, server, rfile=None):
         # Deprecation: The rfile kwarg was introduced in 1.0a1 as part
         # of a refactoring. It was never documented or used. It is
         # considered DEPRECATED and may be removed in the future. Its
         # use is not supported.
 
-        self.socket = sock
+        self.socket = socket
         self.client_address = address
         self.server = server
         if rfile is None:
-            self.rfile = sock.makefile('rb', -1)
+            self.rfile = socket.makefile('rb', -1)
         else:
             self.rfile = rfile
 
@@ -481,10 +470,10 @@ class WSGIHandler(object):
             self.__dict__.pop('rfile', None)
 
     def _check_http_version(self):
-        version_str = self.request_version
-        if not version_str.startswith("HTTP/"):
+        version = self.request_version
+        if not version.startswith("HTTP/"):
             return False
-        version = tuple(int(x) for x in version_str[5:].split("."))  # "HTTP/"
+        version = tuple(int(x) for x in version[5:].split("."))  # "HTTP/"
         if version[1] < 0 or version < (0, 9) or version >= (2, 0):
             return False
         return True
@@ -511,7 +500,6 @@ class WSGIHandler(object):
            Raise the previously documented :exc:`ValueError` in more cases instead of returning a
            false value; this allows subclasses more opportunity to customize behaviour.
         """
-        # pylint:disable=too-many-branches
         self.requestline = raw_requestline.rstrip()
         words = self.requestline.split()
         if len(words) == 3:
@@ -551,7 +539,10 @@ class WSGIHandler(object):
 
         if self.request_version == "HTTP/1.1":
             conntype = self.headers.get("Connection", "").lower()
-            self.close_connection = (conntype == 'close')
+            if conntype == "close":
+                self.close_connection = True
+            else:
+                self.close_connection = False
         else:
             self.close_connection = True
 
@@ -560,17 +551,17 @@ class WSGIHandler(object):
     def log_error(self, msg, *args):
         try:
             message = msg % args
-        except Exception: # pylint:disable=broad-except
+        except Exception:
             traceback.print_exc()
             message = '%r %r' % (msg, args)
         try:
             message = '%s: %s' % (self.socket, message)
-        except Exception: # pylint:disable=broad-except
+        except Exception:
             pass
 
         try:
             self.server.error_log.write(message + '\n')
-        except Exception: # pylint:disable=broad-except
+        except Exception:
             traceback.print_exc()
 
     def read_requestline(self):
@@ -629,10 +620,8 @@ class WSGIHandler(object):
            :meth:`_handle_client_error` to allow subclasses to customize. Note that
            this is experimental and may change in the future.
         """
-        # pylint:disable=too-many-return-statements
         if self.rfile.closed:
             return
-
         try:
             self.requestline = self.read_requestline()
             # Account for old subclasses that haven't done this
@@ -654,11 +643,9 @@ class WSGIHandler(object):
             # for compatibility with older versions of pywsgi, we pass self.requestline as an argument there
             # NOTE: read_request is supposed to raise ValueError on invalid input; allow old
             # subclasses that return a False value instead.
-            # NOTE: This can mutate the value of self.headers, so self.get_environ() must not be
-            # called until AFTER this call is done.
             if not self.read_request(self.requestline):
                 return ('400', _BAD_REQUEST_RESPONSE)
-        except Exception as ex: # pylint:disable=broad-except
+        except Exception as ex:
             # Notice we don't use self.handle_error because it reports
             # a 500 error to the client, and this is almost certainly
             # a client error.
@@ -708,28 +695,13 @@ class WSGIHandler(object):
 
     def _write(self, data):
         if not data:
-            # The application/middleware are allowed to yield
-            # empty bytestrings.
             return
-
         if self.response_use_chunked:
             ## Write the chunked encoding
-            header = ("%x\r\n" % len(data)).encode('ascii')
-            # socket.sendall will slice these small strings, as [0:],
-            # but that's special cased to return the original string.
-            # They're small enough we probably expect them to go down to the network
-            # buffers in one go anyway.
-            self._sendall(header)
-            self._sendall(data)
-            self._sendall(b'\r\n') # trailer
-        else:
-            self._sendall(data)
+            data = ("%x\r\n" % len(data)).encode('ascii') + data + b'\r\n'
+        self._sendall(data)
 
     def write(self, data):
-        # The write() callable we return from start_response.
-        # https://www.python.org/dev/peps/pep-3333/#the-write-callable
-        # Supposed to do pretty much the same thing as yielding values
-        # from the application's return.
         if self.code in (304, 204) and data:
             raise AssertionError('The %s response must have no body' % self.code)
 
@@ -756,24 +728,26 @@ class WSGIHandler(object):
             towrite.extend(b"\r\n")
 
         towrite.extend(b'\r\n')
+        if data:
+            if self.response_use_chunked:
+                ## Write the chunked encoding
+                towrite.extend(("%x\r\n" % len(data)).encode('latin-1'))
+                towrite.extend(data)
+                towrite.extend(b"\r\n")
+            else:
+                try:
+                    towrite.extend(data)
+                except TypeError:
+                    raise TypeError("Not a bytestring", data)
         self._sendall(towrite)
-        # No need to copy the data into towrite; we may make an extra syscall
-        # but the copy time could be substantial too, and it reduces the chances
-        # of sendall being able to send everything in one go
-        self._write(data)
 
     def start_response(self, status, headers, exc_info=None):
         """
-         .. versionchanged:: 1.2a1
-            Avoid HTTP header injection by raising a :exc:`ValueError`
-            if *status* or any *header* name or value contains a carriage
-            return or newline.
          .. versionchanged:: 1.1b5
             Pro-actively handle checking the encoding of the status line
             and headers during this method. On Python 2, avoid some
             extra encodings.
         """
-        # pylint:disable=too-many-branches,too-many-statements
         if exc_info:
             try:
                 if self.headers_sent:
@@ -793,7 +767,6 @@ class WSGIHandler(object):
         # UnicodeError without any clue which header was wrong.
         # Note that this results in copying the header list at this point, not modifying it,
         # although we are allowed to do so if needed. This slightly increases memory usage.
-        # We also check for HTTP Response Splitting vulnerabilities
         response_headers = []
         header = None
         value = None
@@ -803,10 +776,6 @@ class WSGIHandler(object):
                     raise UnicodeError("The header must be a native string", header, value)
                 if not isinstance(value, str):
                     raise UnicodeError("The value must be a native string", header, value)
-                if '\r' in header or '\n' in header:
-                    raise ValueError('carriage return or newline in header name', header)
-                if '\r' in value or '\n' in value:
-                    raise ValueError('carriage return or newline in header value', value)
                 # Either we're on Python 2, in which case bytes is correct, or
                 # we're on Python 3 and the user screwed up (because it should be a native
                 # string). In either case, make sure that this is latin-1 compatible. Under
@@ -823,13 +792,11 @@ class WSGIHandler(object):
                                          value if not PY3 else value.encode("latin-1")))
         except UnicodeEncodeError:
             # If we get here, we're guaranteed to have a header and value
-            raise UnicodeError("Non-latin1 header", repr(header), repr(value))
+            raise UnicodeError("Non-latin1 header", header, value)
 
         # Same as above
         if not isinstance(status, str):
             raise UnicodeError("The status string must be a native string")
-        if '\r' in status or '\n' in status:
-            raise ValueError("carriage return or newline in status", status)
         # don't assign to anything until the validation is complete, including parsing the
         # code
         code = int(status.split(' ', 1)[0])
@@ -894,32 +861,14 @@ class WSGIHandler(object):
             if data:
                 self.write(data)
         if self.status and not self.headers_sent:
-            # In other words, the application returned an empty
-            # result iterable (and did not use the write callable)
-            # Trigger the flush of the headers.
             self.write(b'')
         if self.response_use_chunked:
             self.socket.sendall(b'0\r\n\r\n')
             self.response_length += 5
 
     def run_application(self):
-        assert self.result is None
-        try:
-            self.result = self.application(self.environ, self.start_response)
-            self.process_result()
-        finally:
-            close = getattr(self.result, 'close', None)
-            try:
-                if close is not None:
-                    close()
-            finally:
-                # Discard the result. If it's a generator this can
-                # free a lot of hidden resources (if we failed to iterate
-                # all the way through it---the frames are automatically
-                # cleaned up when StopIteration is raised); but other cases
-                # could still free up resources sooner than otherwise.
-                close = None
-                self.result = None
+        self.result = self.application(self.environ, self.start_response)
+        self.process_result()
 
     def handle_one_response(self):
         self.time_start = time.time()
@@ -934,6 +883,9 @@ class WSGIHandler(object):
             try:
                 self.run_application()
             finally:
+                close = getattr(self.result, 'close', None)
+                if close is not None:
+                    close()
                 try:
                     self.wsgi_input._discard()
                 except (socket.error, IOError):
@@ -957,7 +909,7 @@ class WSGIHandler(object):
                 self.close_connection = True
             else:
                 self.handle_error(*sys.exc_info())
-        except: # pylint:disable=bare-except
+        except:
             self.handle_error(*sys.exc_info())
         finally:
             self.time_finish = time.time()
@@ -968,22 +920,14 @@ class WSGIHandler(object):
             self.close_connection = True
         else:
             status, headers, body = _ERRORS[error_code]
-            try:
-                self.start_response(status, headers[:])
-                self.write(body)
-            except socket.error:
-                if not PY3:
-                    sys.exc_clear()
-                self.close_connection = True
+            self.start_response(status, headers[:])
+            self.write(body)
 
     def _log_error(self, t, v, tb):
         # TODO: Shouldn't we dump this to wsgi.errors? If we did that now, it would
         # wind up getting logged twice
         if not issubclass(t, GreenletExit):
-            context = self.environ
-            if not isinstance(context, self.server.secure_environ_class):
-                context = self.server.secure_environ_class(context)
-            self.server.loop.handle_error(context, t, v, tb)
+            self.server.loop.handle_error(self.environ, t, v, tb)
 
     def handle_error(self, t, v, tb):
         # Called for internal, unexpected errors, NOT invalid client input
@@ -1009,23 +953,18 @@ class WSGIHandler(object):
     def _headers(self):
         key = None
         value = None
-        IGNORED_KEYS = (None, 'CONTENT_TYPE', 'CONTENT_LENGTH')
         for header in self.headers.headers:
             if key is not None and header[:1] in " \t":
                 value += header
                 continue
 
-            if key not in IGNORED_KEYS:
+            if key not in (None, 'CONTENT_TYPE', 'CONTENT_LENGTH'):
                 yield 'HTTP_' + key, value.strip()
 
             key, value = header.split(':', 1)
-            if '_' in key:
-                # strip incoming bad veaders
-                key = None
-            else:
-                key = key.replace('-', '_').upper()
+            key = key.replace('-', '_').upper()
 
-        if key not in IGNORED_KEYS:
+        if key not in (None, 'CONTENT_TYPE', 'CONTENT_LENGTH'):
             yield 'HTTP_' + key, value.strip()
 
     def get_environ(self):
@@ -1075,12 +1014,11 @@ class WSGIHandler(object):
                 env[key] = value
 
         if env.get('HTTP_EXPECT') == '100-continue':
-            sock = self.socket
+            socket = self.socket
         else:
-            sock = None
-
+            socket = None
         chunked = env.get('HTTP_TRANSFER_ENCODING', '').lower() == 'chunked'
-        self.wsgi_input = Input(self.rfile, self.content_length, socket=sock, chunked_input=chunked)
+        self.wsgi_input = Input(self.rfile, self.content_length, socket=socket, chunked_input=chunked)
         env['wsgi.input'] = self.wsgi_input
         return env
 
@@ -1090,7 +1028,6 @@ class _NoopLog(object):
     # to pass the WSGI validator
 
     def write(self, *args, **kwargs):
-        # pylint:disable=unused-argument
         return
 
     def flush(self):
@@ -1165,157 +1102,6 @@ class LoggingLogAdapter(object):
     def __delattr__(self, name):
         delattr(self._logger, name)
 
-####
-## Environ classes.
-# These subclass dict. They could subclass collections.UserDict on
-# 3.3+ and proxy to the underlying real dict to avoid a copy if we
-# have to print them (on 2.7 it's slightly more complicated to be an
-# instance of collections.MutableMapping; UserDict.UserDict isn't.)
-# Then we could have either the WSGIHandler.get_environ or the
-# WSGIServer.get_environ return one of these proxies, and
-# WSGIHandler.run_application would know to access the `environ.data`
-# attribute to be able to pass the *real* dict to the application
-# (because PEP3333 requires no subclasses, only actual dict objects;
-# wsgiref.validator and webob.Request both enforce this). This has the
-# advantage of not being fragile if anybody else tries to print/log
-# self.environ (and not requiring a copy). However, if there are any
-# subclasses of Handler or Server, this could break if they don't know
-# to return this type.
-####
-
-class Environ(dict):
-    """
-    A base class that can be used for WSGI environment objects.
-
-    Provisional API.
-
-    .. versionadded:: 1.2a1
-    """
-
-    __slots__ = () # add no ivars or weakref ability
-
-    def copy(self):
-        return self.__class__(self)
-
-    if not hasattr(dict, 'iteritems'):
-        # Python 3
-        def iteritems(self):
-            return self.items()
-
-    def __reduce_ex__(self, proto):
-        return (dict, (), None, None, iter(self.iteritems()))
-
-class SecureEnviron(Environ):
-    """
-    An environment that does not print its keys and values
-    by default.
-
-    Provisional API.
-
-    This is intended to keep potentially sensitive information like
-    HTTP authorization and cookies from being inadvertently printed
-    or logged.
-
-    For debugging, each instance can have its *secure_repr* attribute
-    set to ``False``, which will cause it to print like a normal dict.
-
-    When *secure_repr* is ``True`` (the default), then the value of
-    the *whitelist_keys* attribute is consulted; if this value is
-    true-ish, it should be a container (something that responds to
-    ``in``) of key names (typically a list or set). Keys and values in
-    this dictionary that are in *whitelist_keys* will then be printed,
-    while all other values will be masked. These values may be
-    customized on the class by setting the *default_secure_repr* and
-    *default_whitelist_keys*, respectively::
-
-        >>> environ = SecureEnviron(key='value')
-        >>> environ # doctest: +ELLIPSIS
-        <pywsgi.SecureEnviron dict (keys: 1) at ...
-
-    If we whitelist the key, it gets printed::
-
-        >>> environ.whitelist_keys = {'key'}
-        >>> environ
-        {'key': 'value'}
-
-    A non-whitelisted key (*only*, to avoid doctest issues) is masked::
-
-        >>> environ['secure'] = 'secret'; del environ['key']
-        >>> environ
-        {'secure': '<MASKED>'}
-
-    We can turn it off entirely for the instance::
-
-        >>> environ.secure_repr = False
-        >>> environ
-        {'secure': 'secret'}
-
-    We can also customize it at the class level (here we use a new
-    class to be explicit and to avoid polluting the true default
-    values; we would set this class to be the ``environ_class`` of the
-    server)::
-
-        >>> class MyEnviron(SecureEnviron):
-        ...    default_whitelist_keys = ('key',)
-        ...
-        >>> environ = MyEnviron({'key': 'value'})
-        >>> environ
-        {'key': 'value'}
-
-    .. versionadded:: 1.2a1
-    """
-
-    default_secure_repr = True
-    default_whitelist_keys = ()
-    default_print_masked_keys = True
-
-    # Allow instances to override the class values,
-    # but inherit from the class if not present. Keeps instances
-    # small since we can't combine __slots__ with class attributes
-    # of the same name.
-    __slots__ = ('secure_repr', 'whitelist_keys', 'print_masked_keys')
-
-    def __getattr__(self, name):
-        if name in SecureEnviron.__slots__:
-            return getattr(type(self), 'default_' + name)
-        raise AttributeError(name)
-
-    def __repr__(self):
-        if self.secure_repr:
-            whitelist = self.whitelist_keys
-            print_masked = self.print_masked_keys
-            if whitelist:
-                safe = {k: self[k] if k in whitelist else "<MASKED>"
-                        for k in self
-                        if k in whitelist or print_masked}
-                safe_repr = repr(safe)
-                if not print_masked and len(safe) != len(self):
-                    safe_repr = safe_repr[:-1] + ", (hidden keys: %d)}" % (len(self) - len(safe))
-                return safe_repr
-            return "<pywsgi.SecureEnviron dict (keys: %d) at %s>" % (len(self), id(self))
-        return Environ.__repr__(self)
-    __str__ = __repr__
-
-
-class WSGISecureEnviron(SecureEnviron):
-    """
-    Specializes the default list of whitelisted keys to a few
-    common WSGI variables.
-
-    Example::
-
-       >>> environ = WSGISecureEnviron(REMOTE_ADDR='::1', HTTP_AUTHORIZATION='secret')
-       >>> environ
-       {'REMOTE_ADDR': '::1', (hidden keys: 1)}
-       >>> import pprint
-       >>> pprint.pprint(environ)
-       {'REMOTE_ADDR': '::1', (hidden keys: 1)}
-       >>> print(pprint.pformat(environ))
-       {'REMOTE_ADDR': '::1', (hidden keys: 1)}
-    """
-    default_whitelist_keys = ('REMOTE_ADDR', 'REMOTE_PORT', 'HTTP_HOST')
-    default_print_masked_keys = False
-
 
 class WSGIServer(StreamServer):
     """
@@ -1377,19 +1163,6 @@ class WSGIServer(StreamServer):
     #: parameter.
     error_log = None
 
-    #: The class of environ objects passed to the handlers.
-    #: Must be a dict subclass. For compliance with :pep:`3333`
-    #: and libraries like WebOb, this is simply :class:`dict`
-    #: but this can be customized in a subclass or per-instance
-    #: (probably to :class:`WSGISecureEnviron`).
-    #:
-    #: .. versionadded:: 1.2a1
-    environ_class = dict
-
-    # Undocumented internal detail: the class that WSGIHandler._log_error
-    # will cast to before passing to the loop.
-    secure_environ_class = WSGISecureEnviron
-
     base_env = {'GATEWAY_INTERFACE': 'CGI/1.1',
                 'SERVER_SOFTWARE': 'gevent/%d.%d Python/%d.%d' % (gevent.version_info[:2] + sys.version_info[:2]),
                 'SCRIPT_NAME': '',
@@ -1428,8 +1201,7 @@ class WSGIServer(StreamServer):
         if environ is not None:
             self.environ = environ
         environ_update = getattr(self, 'environ', None)
-
-        self.environ = self.environ_class(self.base_env)
+        self.environ = self.base_env.copy()
         if self.ssl_enabled:
             self.environ['wsgi.url_scheme'] = 'https'
         else:
@@ -1444,7 +1216,7 @@ class WSGIServer(StreamServer):
             self.max_accept = 1
 
     def get_environ(self):
-        return self.environ_class(self.environ)
+        return self.environ.copy()
 
     def init_socket(self):
         StreamServer.init_socket(self)
@@ -1471,39 +1243,11 @@ class WSGIServer(StreamServer):
             self.environ.setdefault('SERVER_NAME', '')
             self.environ.setdefault('SERVER_PORT', '')
 
-    def handle(self, sock, address):
+    def handle(self, socket, address):
         """
         Create an instance of :attr:`handler_class` to handle the request.
 
         This method blocks until the handler returns.
         """
-        # pylint:disable=method-hidden
-        handler = self.handler_class(sock, address, self)
+        handler = self.handler_class(socket, address, self)
         handler.handle()
-
-def _main():
-    # Provisional main handler, for quick tests, not production
-    # usage.
-    from gevent import monkey; monkey.patch_all()
-
-    import argparse
-    import importlib
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("app", help="dotted name of WSGI app callable [module:callable]")
-    parser.add_argument("-b", "--bind",
-                        help="The socket to bind",
-                        default=":8080")
-
-    args = parser.parse_args()
-
-    module_name, app_name = args.app.split(':')
-    module = importlib.import_module(module_name)
-    app = getattr(module, app_name)
-    bind = args.bind
-
-    server = WSGIServer(bind, app)
-    server.serve_forever()
-
-if __name__ == '__main__':
-    _main()

@@ -10,36 +10,21 @@ in this module only block the current greenlet and let the others run.
 For convenience, exceptions (like :class:`error <socket.error>` and :class:`timeout <socket.timeout>`)
 as well as the constants from the :mod:`socket` module are imported into this module.
 """
-# Our import magic sadly makes this warning useless
-# pylint: disable=undefined-variable
 
 import sys
-from gevent._compat import PY3
-from gevent._util import copy_globals
+from gevent.hub import PY3
 
 
 if PY3:
-    from gevent import _socket3 as _source # python 2: pylint:disable=no-name-in-module
+    from gevent import _socket3 as _source
 else:
     from gevent import _socket2 as _source
 
-# define some things we're expecting to overwrite; each module
-# needs to define these
-__implements__ = __dns__ = __all__ = __extensions__ = __imports__ = ()
 
-
-class error(Exception):
-    errno = None
-
-
-def getfqdn(*args):
-    # pylint:disable=unused-argument
-    raise NotImplementedError()
-
-copy_globals(_source, globals(),
-             dunder_names_to_keep=('__implements__', '__dns__', '__all__',
-                                   '__extensions__', '__imports__', '__socket__'),
-             cleanup_globs=False)
+for key in _source.__dict__:
+    if key.startswith('__') and key not in '__implements__ __dns__ __all__ __extensions__ __imports__ __socket__'.split():
+        continue
+    globals()[key] = getattr(_source, key)
 
 # The _socket2 and _socket3 don't import things defined in
 # __extensions__, to help avoid confusing reference cycles in the
@@ -50,8 +35,10 @@ copy_globals(_source, globals(),
 #             module gevent._socket2, attribute cancel_wait
 # These can be ignored.)
 from gevent import _socketcommon
-copy_globals(_socketcommon, globals(),
-             only_names=_socketcommon.__extensions__)
+for key in _socketcommon.__extensions__:
+    globals()[key] = getattr(_socketcommon, key)
+
+del key
 
 try:
     _GLOBAL_DEFAULT_TIMEOUT = __socket__._GLOBAL_DEFAULT_TIMEOUT
@@ -75,7 +62,7 @@ def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT, source_address=N
     host, port = address
     err = None
     for res in getaddrinfo(host, port, 0 if has_ipv6 else AF_INET, SOCK_STREAM):
-        af, socktype, proto, _, sa = res
+        af, socktype, proto, _canonname, sa = res
         sock = None
         try:
             sock = socket(af, socktype, proto)
@@ -91,12 +78,12 @@ def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT, source_address=N
             # that does not happen with regular sockets though, because _socket.socket.connect() is a built-in.
             # this is similar to "getnameinfo loses a reference" failure in test_socket.py
             if not PY3:
-                sys.exc_clear() # pylint:disable=no-member,useless-suppression
+                sys.exc_clear()
             if sock is not None:
                 sock.close()
             err = ex
     if err is not None:
-        raise err # pylint:disable=raising-bad-type
+        raise err
     else:
         raise error("getaddrinfo returns an empty list")
 

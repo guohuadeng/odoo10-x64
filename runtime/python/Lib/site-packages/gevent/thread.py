@@ -1,12 +1,10 @@
-"""
-Implementation of the standard :mod:`thread` module that spawns greenlets.
+"""Implementation of the standard :mod:`thread` module that spawns greenlets.
 
 .. note::
 
-    This module is a helper for :mod:`gevent.monkey` and is not
-    intended to be used directly. For spawning greenlets in your
-    applications, prefer higher level constructs like
-    :class:`gevent.Greenlet` class or :func:`gevent.spawn`.
+    This module is a helper for :mod:`gevent.monkey` and is not intended to be
+    used directly. For spawning greenlets in your applications, prefer
+    :class:`Greenlet` class.
 """
 from __future__ import absolute_import
 import sys
@@ -21,9 +19,9 @@ __implements__ = ['allocate_lock',
 
 __imports__ = ['error']
 if sys.version_info[0] <= 2:
-    import thread as __thread__ # pylint:disable=import-error
+    import thread as __thread__
 else:
-    import _thread as __thread__ # pylint:disable=import-error
+    import _thread as __thread__
     __target__ = '_thread'
     __imports__ += ['RLock',
                     'TIMEOUT_MAX',
@@ -32,10 +30,7 @@ else:
                     'interrupt_main',
                     'start_new']
 error = __thread__.error
-from gevent._compat import PY3
-from gevent._compat import PYPY
-from gevent._util import copy_globals
-from gevent.hub import getcurrent, GreenletExit
+from gevent.hub import getcurrent, GreenletExit, PY3
 from gevent.greenlet import Greenlet
 from gevent.lock import BoundedSemaphore
 from gevent.local import local as _local
@@ -43,15 +38,13 @@ from gevent.local import local as _local
 
 def get_ident(gr=None):
     if gr is None:
-        gr = getcurrent()
-    return id(gr)
-
-
-def start_new_thread(function, args=(), kwargs=None):
-    if kwargs is not None:
-        greenlet = Greenlet.spawn(function, *args, **kwargs)
+        return id(getcurrent())
     else:
-        greenlet = Greenlet.spawn(function, *args)
+        return id(gr)
+
+
+def start_new_thread(function, args=(), kwargs={}):
+    greenlet = Greenlet.spawn(function, *args, **kwargs)
     return get_ident(greenlet)
 
 
@@ -60,11 +53,8 @@ class LockType(BoundedSemaphore):
     # and any other API changes we need to make to match behaviour
     _OVER_RELEASE_ERROR = __thread__.error
 
-    if PYPY and PY3:
-        _OVER_RELEASE_ERROR = RuntimeError
-
     if PY3:
-        _TIMEOUT_MAX = __thread__.TIMEOUT_MAX # python 2: pylint:disable=no-member
+        _TIMEOUT_MAX = __thread__.TIMEOUT_MAX
 
         def acquire(self, blocking=True, timeout=-1):
             # Transform the default -1 argument into the None that our
@@ -104,9 +94,12 @@ if hasattr(__thread__, 'stack_size'):
 else:
     __implements__.remove('stack_size')
 
-__imports__ = copy_globals(__thread__, globals(),
-                           only_names=__imports__,
-                           ignore_missing_names=True)
+for name in __imports__[:]:
+    try:
+        value = getattr(__thread__, name)
+        globals()[name] = value
+    except AttributeError:
+        __imports__.remove(name)
 
 __all__ = __implements__ + __imports__
 __all__.remove('_local')

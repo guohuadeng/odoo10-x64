@@ -45,9 +45,7 @@ from __future__ import absolute_import
 
 import os
 import sys
-from gevent.hub import get_hub, reinit
-from gevent._compat import PY3
-from gevent._util import copy_globals
+from gevent.hub import get_hub, reinit, PY3
 import errno
 
 EAGAIN = getattr(errno, 'EAGAIN', 11)
@@ -142,8 +140,6 @@ def tp_write(fd, buf):
 
 
 if hasattr(os, 'fork'):
-    # pylint:disable=function-redefined,redefined-outer-name
-
     _raw_fork = os.fork
 
     def fork_gevent():
@@ -260,53 +256,30 @@ if hasattr(os, 'fork'):
             """
             Wait for a child process to finish.
 
-            If the child process was spawned using
-            :func:`fork_and_watch`, then this function behaves
-            cooperatively. If not, it *may* have race conditions; see
+            If the child process was spawned using :func:`fork_and_watch`, then this
+            function behaves cooperatively. If not, it *may* have race conditions; see
             :func:`fork_gevent` for more information.
 
-            The arguments are as for the underlying
-            :func:`os.waitpid`. Some combinations of *options* may not
-            be supported cooperatively (as of 1.1 that includes
-            WUNTRACED). Using a *pid* of 0 to request waiting on only processes
-            from the current process group is not cooperative.
+            The arguments are as for the underlying :func:`os.waitpid`. Some combinations
+            of *options* may not be supported (as of 1.1 that includes WUNTRACED).
 
             Availability: POSIX.
 
             .. versionadded:: 1.1b1
-            .. versionchanged:: 1.2a1
-               More cases are handled in a cooperative manner.
             """
             # XXX Does not handle tracing children
-
-            # So long as libev's loop doesn't run, it's OK to add
-            # child watchers. The SIGCHLD handler only feeds events
-            # for the next iteration of the loop to handle. (And the
-            # signal handler itself is only called from the next loop
-            # iteration.)
-
             if pid <= 0:
                 # magic functions for multiple children.
                 if pid == -1:
                     # Any child. If we have one that we're watching and that finished,
-                    # we will use that one. Otherwise, let the OS take care of it.
+                    # we need to use that one. Otherwise, let the OS take care of it.
                     for k, v in _watched_children.items():
                         if isinstance(v, tuple):
                             pid = k
                             break
                 if pid <= 0:
-                    # We didn't have one that was ready. If there are
-                    # no funky options set, and the pid was -1
-                    # (meaning any process, not 0, which means process
-                    # group--- libev doesn't know about process
-                    # groups) then we can use a child watcher of pid 0; otherwise,
-                    # pass through to the OS.
-                    if pid == -1 and options == 0:
-                        hub = get_hub()
-                        watcher = hub.loop.child(0, False)
-                        hub.wait(watcher)
-                        return watcher.rpid, watcher.rstatus
-                    # There were funky options/pid, so we must go to the OS.
+                    # If we didn't find anything, go to the OS. Otherwise,
+                    # handle waiting
                     return _waitpid(pid, options)
 
             if pid in _watched_children:
@@ -323,24 +296,17 @@ if hasattr(os, 'fork'):
                     # it's not finished
                     return (0, 0)
                 else:
-                    # Ok, we need to "block". Do so via a watcher so that we're
-                    # cooperative. We know it's our child, etc, so this should work.
-                    watcher = _watched_children[pid]
-                    # We can't start a watcher that's already started,
-                    # so we can't reuse the existing watcher.
-                    new_watcher = watcher.loop.child(pid, False)
-                    get_hub().wait(new_watcher)
-                    # Ok, so now the new watcher is done. That means
-                    # the old watcher's callback (_on_child) should
-                    # have fired, potentially taking this child out of
-                    # _watched_children (but that could depend on how
-                    # many callbacks there were to run, so use the
-                    # watcher object directly; libev sets all the
-                    # watchers at the same time).
-                    return watcher.rpid, watcher.rstatus
-
-            # we're not watching it and it may not even  be our child,
-            # so we must go to the OS to be sure to get the right semantics (exception)
+                    # we should block. Let the underlying OS call block; it should
+                    # eventually die with OSError, depending on signal delivery
+                    try:
+                        return _waitpid(pid, options)
+                    except OSError:
+                        if pid in _watched_children and isinstance(_watched_children, tuple):
+                            result = _watched_children[pid]
+                            del _watched_children[pid]
+                            return result[:2]
+                        raise
+            # we're not watching it
             return _waitpid(pid, options)
 
         def fork_and_watch(callback=None, loop=None, ref=False, fork=fork_gevent):
@@ -461,8 +427,5 @@ if hasattr(os, 'fork'):
 else:
     __implements__.remove('fork')
 
-__imports__ = copy_globals(os, globals(),
-                           names_to_ignore=__implements__ + __extensions__,
-                           dunder_names_to_keep=())
 
-__all__ = list(set(__implements__ + __extensions__))
+__all__ = __implements__ + __extensions__

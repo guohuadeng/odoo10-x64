@@ -8,41 +8,44 @@ This module implements cooperative SSL socket wrappers.
 """
 
 from __future__ import absolute_import
-# Our import magic sadly makes this warning useless
-# pylint: disable=undefined-variable
-# pylint: disable=too-many-instance-attributes,too-many-locals,too-many-statements,too-many-branches
-# pylint: disable=arguments-differ,too-many-public-methods
-
 import ssl as __ssl__
 
-_ssl = __ssl__._ssl # pylint:disable=no-member
+_ssl = __ssl__._ssl
 
 import errno
 from gevent._socket2 import socket
 from gevent.socket import timeout_default
-from gevent.socket import create_connection
 from gevent.socket import error as socket_error
 from gevent.socket import timeout as _socket_timeout
-from gevent._compat import PYPY
-from gevent._util import copy_globals
+from gevent.hub import PYPY
 
-__implements__ = [
-    'SSLContext',
-    'SSLSocket',
-    'wrap_socket',
-    'get_server_certificate',
-    'create_default_context',
-    '_create_unverified_context',
-    '_create_default_https_context',
-    '_create_stdlib_context',
-]
+__implements__ = ['SSLContext',
+                  'SSLSocket',
+                  'wrap_socket',
+                  'get_server_certificate',
+                  'create_default_context',
+                  '_create_unverified_context',
+                  '_create_default_https_context',
+                  '_create_stdlib_context']
+
+__imports__ = []
 
 # Import all symbols from Python's ssl.py, except those that we are implementing
 # and "private" symbols.
-__imports__ = copy_globals(__ssl__, globals(),
-                           # SSLSocket *must* subclass gevent.socket.socket; see issue 597 and 801
-                           names_to_ignore=__implements__ + ['socket', 'create_connection'],
-                           dunder_names_to_keep=())
+value = None
+for name in dir(__ssl__):
+    if name in __implements__:
+        continue
+    if name.startswith('__'):
+        continue
+    if name == 'socket':
+        # SSLSocket *must* subclass gevent.socket.socket; see issue 597
+        continue
+    value = getattr(__ssl__, name)
+    globals()[name] = value
+    __imports__.append(name)
+
+del name, value
 
 try:
     _delegate_methods
@@ -50,10 +53,8 @@ except NameError: # PyPy doesn't expose this detail
     _delegate_methods = ('recv', 'recvfrom', 'recv_into', 'recvfrom_into', 'send', 'sendto')
 
 __all__ = __implements__ + __imports__
-if 'namedtuple' in __all__:
-    __all__.remove('namedtuple')
 
-orig_SSLContext = __ssl__.SSLContext # pylint: disable=no-member
+orig_SSLContext = __ssl__.SSLContext
 
 
 class SSLContext(orig_SSLContext):
@@ -94,7 +95,7 @@ def create_default_context(purpose=Purpose.SERVER_AUTH, cafile=None,
     if purpose == Purpose.SERVER_AUTH:
         # verify certs and host name in client mode
         context.verify_mode = CERT_REQUIRED
-        context.check_hostname = True # pylint: disable=attribute-defined-outside-init
+        context.check_hostname = True
     elif purpose == Purpose.CLIENT_AUTH:
         # Prefer the server's ciphers by default so that we get stronger
         # encryption
@@ -117,9 +118,9 @@ def create_default_context(purpose=Purpose.SERVER_AUTH, cafile=None,
     return context
 
 def _create_unverified_context(protocol=PROTOCOL_SSLv23, cert_reqs=None,
-                               check_hostname=False, purpose=Purpose.SERVER_AUTH,
-                               certfile=None, keyfile=None,
-                               cafile=None, capath=None, cadata=None):
+                           check_hostname=False, purpose=Purpose.SERVER_AUTH,
+                           certfile=None, keyfile=None,
+                           cafile=None, capath=None, cadata=None):
     """Create a SSLContext object for Python stdlib modules
 
     All Python stdlib modules shall use this function to create SSLContext
@@ -139,7 +140,7 @@ def _create_unverified_context(protocol=PROTOCOL_SSLv23, cert_reqs=None,
 
     if cert_reqs is not None:
         context.verify_mode = cert_reqs
-    context.check_hostname = check_hostname # pylint: disable=attribute-defined-outside-init
+    context.check_hostname = check_hostname
 
     if keyfile and not certfile:
         raise ValueError("certfile must be specified")
@@ -164,6 +165,7 @@ _create_default_https_context = create_default_context
 # Backwards compatibility alias, even though it's not a public name.
 _create_stdlib_context = _create_unverified_context
 
+
 class SSLSocket(socket):
     """
     gevent `ssl.SSLSocket <https://docs.python.org/2/library/ssl.html#ssl-sockets>`_
@@ -178,8 +180,7 @@ class SSLSocket(socket):
                  suppress_ragged_eofs=True, npn_protocols=None, ciphers=None,
                  server_hostname=None,
                  _context=None):
-        # fileno is ignored
-        # pylint: disable=unused-argument
+
         if _context:
             self._context = _context
         else:
@@ -280,8 +281,8 @@ class SSLSocket(socket):
         self._sslobj.context = ctx
 
     def dup(self):
-        raise NotImplementedError("Can't dup() %s instances" %
-                                  self.__class__.__name__)
+        raise NotImplemented("Can't dup() %s instances" %
+                             self.__class__.__name__)
 
     def _checkClosed(self, msg=None):
         # raise an exception here if you wish to check for spurious closes
@@ -295,23 +296,18 @@ class SSLSocket(socket):
             # EAGAIN.
             self.getpeername()
 
-    def read(self, len=1024, buffer=None):
+    def read(self, len=0, buffer=None):
         """Read up to LEN bytes and return them.
         Return zero-length string on EOF."""
         self._checkClosed()
-
-        while 1:
-            if not self._sslobj:
-                raise ValueError("Read on closed or unwrapped SSL socket.")
-            if len == 0:
-                return b'' if buffer is None else 0
-            if len < 0 and buffer is None:
-                # This is handled natively in python 2.7.12+
-                raise ValueError("Negative read length")
+        if not self._sslobj:
+            raise ValueError("Read on closed or unwrapped SSL socket.")
+        while True:
             try:
                 if buffer is not None:
                     return self._sslobj.read(len, buffer)
-                return self._sslobj.read(len or 1024)
+                else:
+                    return self._sslobj.read(len or 1024)
             except SSLWantReadError:
                 if self.timeout == 0.0:
                     raise
@@ -325,7 +321,8 @@ class SSLSocket(socket):
                 if ex.args[0] == SSL_ERROR_EOF and self.suppress_ragged_eofs:
                     if buffer is not None:
                         return 0
-                    return b''
+                    else:
+                        return b''
                 else:
                     raise
 
@@ -333,11 +330,9 @@ class SSLSocket(socket):
         """Write DATA to the underlying SSL channel.  Returns
         number of bytes of DATA actually transmitted."""
         self._checkClosed()
-
-        while 1:
-            if not self._sslobj:
-                raise ValueError("Write on closed or unwrapped SSL socket.")
-
+        if not self._sslobj:
+            raise ValueError("Write on closed or unwrapped SSL socket.")
+        while True:
             try:
                 return self._sslobj.write(data)
             except SSLError as ex:
@@ -366,27 +361,31 @@ class SSLSocket(socket):
         self._checkClosed()
         if not self._sslobj or not _ssl.HAS_NPN:
             return None
-        return self._sslobj.selected_npn_protocol()
+        else:
+            return self._sslobj.selected_npn_protocol()
 
     if hasattr(_ssl, 'HAS_ALPN'):
         # 2.7.10+
         def selected_alpn_protocol(self):
             self._checkClosed()
-            if not self._sslobj or not _ssl.HAS_ALPN: # pylint:disable=no-member
+            if not self._sslobj or not _ssl.HAS_ALPN:
                 return None
-            return self._sslobj.selected_alpn_protocol()
+            else:
+                return self._sslobj.selected_alpn_protocol()
 
     def cipher(self):
         self._checkClosed()
         if not self._sslobj:
             return None
-        return self._sslobj.cipher()
+        else:
+            return self._sslobj.cipher()
 
     def compression(self):
         self._checkClosed()
         if not self._sslobj:
             return None
-        return self._sslobj.compression()
+        else:
+            return self._sslobj.compression()
 
     def __check_flags(self, meth, flags):
         if flags != 0:
@@ -453,25 +452,21 @@ class SSLSocket(socket):
                 raise ValueError(
                     "non-zero flags not allowed in calls to recv() on %s" %
                     self.__class__)
-            if buflen == 0:
-                return b''
             return self.read(buflen)
         else:
             return socket.recv(self, buflen, flags)
 
     def recv_into(self, buffer, nbytes=None, flags=0):
         self._checkClosed()
-        if buffer is not None and (nbytes is None):
-            # Fix for python bug #23804: bool(bytearray()) is False,
-            # but we should read 0 bytes.
+        if buffer and (nbytes is None):
             nbytes = len(buffer)
         elif nbytes is None:
             nbytes = 1024
         if self._sslobj:
             if flags != 0:
                 raise ValueError(
-                    "non-zero flags not allowed in calls to recv_into() on %s" %
-                    self.__class__)
+                  "non-zero flags not allowed in calls to recv_into() on %s" %
+                  self.__class__)
             return self.read(nbytes, buffer)
         else:
             return socket.recv_into(self, buffer, nbytes, flags)
@@ -504,7 +499,8 @@ class SSLSocket(socket):
         self._checkClosed()
         if self._sslobj:
             return self._sslobj.pending()
-        return 0
+        else:
+            return 0
 
     def shutdown(self, how):
         self._checkClosed()
@@ -559,7 +555,7 @@ class SSLSocket(socket):
 
     def _real_close(self):
         self._sslobj = None
-        socket._real_close(self) # pylint: disable=no-member
+        socket._real_close(self)
 
     def do_handshake(self):
         """Perform a TLS/SSL handshake."""
@@ -577,7 +573,7 @@ class SSLSocket(socket):
                     raise
                 self._wait(self._write_event, timeout_exc=_SSLErrorHandshakeTimeout)
 
-        if self._context.check_hostname:
+        if self.context.check_hostname:
             if not self.server_hostname:
                 raise ValueError("check_hostname needs server_hostname "
                                  "argument")
@@ -590,7 +586,7 @@ class SSLSocket(socket):
         # connected at the time of the call.  We connect it, then wrap it.
         if self._connected:
             raise ValueError("attempt to connect already-connected SSLSocket!")
-        self._sslobj = self._context._wrap_socket(self._sock, False, self.server_hostname, ssl_sock=self)
+        self._sslobj = self.context._wrap_socket(self._sock, False, self.server_hostname, ssl_sock=self)
         try:
             if connect_ex:
                 rc = socket.connect_ex(self, addr)
@@ -622,10 +618,10 @@ class SSLSocket(socket):
         SSL channel, and the address of the remote client."""
 
         newsock, addr = socket.accept(self)
-        newsock = self._context.wrap_socket(newsock,
-                                            do_handshake_on_connect=self.do_handshake_on_connect,
-                                            suppress_ragged_eofs=self.suppress_ragged_eofs,
-                                            server_side=True)
+        newsock = self.context.wrap_socket(newsock,
+                    do_handshake_on_connect=self.do_handshake_on_connect,
+                    suppress_ragged_eofs=self.suppress_ragged_eofs,
+                    server_side=True)
         return newsock, addr
 
     def makefile(self, mode='r', bufsize=-1):
@@ -648,8 +644,8 @@ class SSLSocket(socket):
             raise ValueError("Unsupported channel binding type")
         if cb_type != "tls-unique":
             raise NotImplementedError(
-                "{0} channel binding type not implemented"
-                .format(cb_type))
+                            "{0} channel binding type not implemented"
+                            .format(cb_type))
         if self._sslobj is None:
             return None
         return self._sslobj.tls_unique_cb()
@@ -700,7 +696,7 @@ def get_server_certificate(addr, ssl_version=PROTOCOL_SSLv23, ca_certs=None):
     If 'ca_certs' is specified, validate the server cert against it.
     If 'ssl_version' is specified, use it in the connection attempt."""
 
-    _, _ = addr
+    host, port = addr
     if ca_certs is not None:
         cert_reqs = CERT_REQUIRED
     else:

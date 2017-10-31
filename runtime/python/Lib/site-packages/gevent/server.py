@@ -4,7 +4,7 @@ import sys
 import _socket
 from gevent.baseserver import BaseServer
 from gevent.socket import EWOULDBLOCK, socket
-from gevent._compat import PYPY, PY3
+from gevent.hub import PYPY, PY3
 
 __all__ = ['StreamServer', 'DatagramServer']
 
@@ -17,56 +17,11 @@ else:
 
 
 class StreamServer(BaseServer):
-    """
-    A generic TCP server.
+    """A generic TCP server. Accepts connections on a listening socket and spawns user-provided *handle*
+    for each connection with 2 arguments: the client socket and the client address.
 
-    Accepts connections on a listening socket and spawns user-provided
-    *handle* function for each connection with 2 arguments: the client
-    socket and the client address.
-
-    Note that although the errors in a successfully spawned handler
-    will not affect the server or other connections, the errors raised
-    by :func:`accept` and *spawn* cause the server to stop accepting
-    for a short amount of time. The exact period depends on the values
-    of :attr:`min_delay` and :attr:`max_delay` attributes.
-
-    The delay starts with :attr:`min_delay` and doubles with each
-    successive error until it reaches :attr:`max_delay`. A successful
-    :func:`accept` resets the delay to :attr:`min_delay` again.
-
-    See :class:`~gevent.baseserver.BaseServer` for information on defining the *handle*
-    function and important restrictions on it.
-
-    **SSL Support**
-
-    The server can optionally work in SSL mode when given the correct
-    keyword arguments. (That is, the presence of any keyword arguments
-    will trigger SSL mode.) On Python 2.7.9 and later (any Python
-    version that supports the :class:`ssl.SSLContext`), this can be
-    done with a configured ``SSLContext``. On any Python version, it
-    can be done by passing the appropriate arguments for
-    :func:`ssl.wrap_socket`.
-
-    The incoming socket will be wrapped into an SSL socket before
-    being passed to the *handle* function.
-
-    If the *ssl_context* keyword argument is present, it should
-    contain an :class:`ssl.SSLContext`. The remaining keyword
-    arguments are passed to the :meth:`ssl.SSLContext.wrap_socket`
-    method of that object. Depending on the Python version, supported arguments
-    may include:
-
-    - server_hostname
-    - suppress_ragged_eofs
-    - do_handshake_on_connect
-
-    .. caution:: When using an SSLContext, it should either be
-       imported from :mod:`gevent.ssl`, or the process needs to be monkey-patched.
-       If the process is not monkey-patched and you pass the standard library
-       SSLContext, the resulting client sockets will not cooperate with gevent.
-
-    Otherwise, keyword arguments are assumed to apply to :func:`ssl.wrap_socket`.
-    These keyword arguments bay include:
+    If any of the following keyword arguments are present, then the server assumes SSL mode and uses these arguments
+    to create an SSL wrapper for the client socket before passing it to *handle*:
 
     - keyfile
     - certfile
@@ -77,9 +32,14 @@ class StreamServer(BaseServer):
     - do_handshake_on_connect
     - ciphers
 
-    .. versionchanged:: 1.2a2
-       Add support for the *ssl_context* keyword argument.
+    Note that although the errors in a successfully spawned handler will not affect the server or other connections,
+    the errors raised by :func:`accept` and *spawn* cause the server to stop accepting for a short amount of time. The
+    exact period depends on the values of :attr:`min_delay` and :attr:`max_delay` attributes.
 
+    The delay starts with :attr:`min_delay` and doubles with each successive error until it reaches :attr:`max_delay`.
+    A successful :func:`accept` resets the delay to :attr:`min_delay` again.
+
+    See :class:`BaseServer` for information on defining the *handle* function and important restrictions on it.
     """
     # the default backlog to use if none was provided in __init__
     backlog = 256
@@ -91,14 +51,9 @@ class StreamServer(BaseServer):
         try:
             if ssl_args:
                 ssl_args.setdefault('server_side', True)
-                if 'ssl_context' in ssl_args:
-                    ssl_context = ssl_args.pop('ssl_context')
-                    self.wrap_socket = ssl_context.wrap_socket
-                    self.ssl_args = ssl_args
-                else:
-                    from gevent.ssl import wrap_socket
-                    self.wrap_socket = wrap_socket
-                    self.ssl_args = ssl_args
+                from gevent.ssl import wrap_socket
+                self.wrap_socket = wrap_socket
+                self.ssl_args = ssl_args
             else:
                 self.ssl_args = None
             if backlog is not None:
@@ -122,8 +77,6 @@ class StreamServer(BaseServer):
 
     def init_socket(self):
         if not hasattr(self, 'socket'):
-            # FIXME: clean up the socket lifetime
-            # pylint:disable=attribute-defined-outside-init
             self.socket = self.get_listener(self.address, self.backlog, self.family)
             self.address = self.socket.getsockname()
         if self.ssl_args:
@@ -132,10 +85,10 @@ class StreamServer(BaseServer):
             self._handle = self.handle
 
     @classmethod
-    def get_listener(cls, address, backlog=None, family=None):
+    def get_listener(self, address, backlog=None, family=None):
         if backlog is None:
-            backlog = cls.backlog
-        return _tcp_listener(address, backlog=backlog, reuse_addr=cls.reuse_addr, family=family)
+            backlog = self.backlog
+        return _tcp_listener(address, backlog=backlog, reuse_addr=self.reuse_addr, family=family)
 
     if PY3:
 
@@ -143,7 +96,7 @@ class StreamServer(BaseServer):
             sock = self.socket
             try:
                 fd, address = sock._accept()
-            except BlockingIOError: # python 2: pylint: disable=undefined-variable
+            except BlockingIOError:
                 if not sock.timeout:
                     return
                 raise
@@ -165,9 +118,8 @@ class StreamServer(BaseServer):
                 client_socket._drop()
             return sockobj, address
 
-    def do_close(self, sock, *args):
-        # pylint:disable=arguments-differ
-        sock.close()
+    def do_close(self, socket, *args):
+        socket.close()
 
     def wrap_socket_and_handle(self, client_socket, address):
         # used in case of ssl sockets
@@ -181,16 +133,12 @@ class DatagramServer(BaseServer):
     reuse_addr = DEFAULT_REUSE_ADDR
 
     def __init__(self, *args, **kwargs):
-        # The raw (non-gevent) socket, if possible
-        self._socket = None
         BaseServer.__init__(self, *args, **kwargs)
         from gevent.lock import Semaphore
         self._writelock = Semaphore()
 
     def init_socket(self):
         if not hasattr(self, 'socket'):
-            # FIXME: clean up the socket lifetime
-            # pylint:disable=attribute-defined-outside-init
             self.socket = self.get_listener(self.address, self.family)
             self.address = self.socket.getsockname()
         self._socket = self.socket
@@ -200,8 +148,8 @@ class DatagramServer(BaseServer):
             pass
 
     @classmethod
-    def get_listener(cls, address, family=None):
-        return _udp_socket(address, reuse_addr=cls.reuse_addr, family=family)
+    def get_listener(self, address, family=None):
+        return _udp_socket(address, reuse_addr=self.reuse_addr, family=family)
 
     def do_read(self):
         try:
@@ -238,9 +186,6 @@ def _tcp_listener(address, backlog=50, reuse_addr=None, family=_socket.AF_INET):
 
 
 def _udp_socket(address, backlog=50, reuse_addr=None, family=_socket.AF_INET):
-    # backlog argument for compat with tcp_listener
-    # pylint:disable=unused-argument
-
     # we want gevent.socket.socket here
     sock = socket(family=family, type=_socket.SOCK_DGRAM)
     if reuse_addr is not None:
