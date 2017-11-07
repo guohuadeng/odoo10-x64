@@ -3,7 +3,7 @@ Green Odoo10 x64 性能优化版
 1. python 2.7.9 ,64位
 2. postgresql 9.6.4 ,64位
 3. Nginx 1.12.1， 32位
-4. odoo 10 ,20171031版
+4. odoo 10 ,20171107版
 
 ##最新文档
 http://www.sunpop.cn/odoo10_fast_x64_download/
