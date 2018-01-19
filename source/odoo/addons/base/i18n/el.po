@@ -8,13 +8,14 @@
 # Sophia Anastasopoulos <sophiaanast1@gmail.com>, 2016
 # Stefanos Nikou <stefanos.nikou@gmail.com>, 2016
 # Giota Dandidou <giotadandidou@gmail.com>, 2017
+# George Tarasidis <george_tarasidis@yahoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-20 07:12+0000\n"
 "PO-Revision-Date: 2017-10-20 07:12+0000\n"
-"Last-Translator: Giota Dandidou <giotadandidou@gmail.com>, 2017\n"
+"Last-Translator: George Tarasidis <george_tarasidis@yahoo.com>, 2017\n"
 "Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -603,6 +604,11 @@ msgid ""
 "        to allow you to define interviews for different jobs.\n"
 "    "
 msgstr ""
+"\n"
+"      Χρησιμοποιήστε έντυπα συνέντευξης κατά τη διαδικασία πρόσληψης.\n"
+"        Αυτή η ενότητα είναι ενσωματωμένη στο άρθρωμα 'Ερευνα\n"
+"        για να μπορέσετε να ορίσετε συνεντεύξεις για διάφορες θέσεις εργασίας.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_timesheet_grid_sale
@@ -5957,7 +5963,7 @@ msgstr "Ο βασικός λογαριασμός του φόρου μετρητ�
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_taxcloud
 msgid "Account TaxCloud"
-msgstr ""
+msgstr "Λογαριασμός  TaxCloud"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_account_taxcloud
@@ -6068,7 +6074,7 @@ msgstr "Σύνδεσμοι Ενεργειών / Προεπιλογές"
 #: model:ir.model.fields,field_description:base.field_ir_actions_help
 #: model:ir.model.fields,field_description:base.field_ir_actions_help_305
 msgid "Action Description"
-msgstr ""
+msgstr "Περιγραφή Δράσης"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_client_name
@@ -9790,7 +9796,7 @@ msgstr "Επιπλέον"
 #: model:ir.module.category,name:base.module_category_usability
 #: model:ir.ui.view,arch_db:base.user_groups_view
 msgid "Extra Rights"
-msgstr ""
+msgstr "Πρόσθετα Δικαιώματα"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_extra_tools
@@ -10365,7 +10371,7 @@ msgstr "Gambia"
 #: model:ir.module.category,name:base.module_category_hr_gamification
 #: model:ir.module.module,shortdesc:base.module_gamification
 msgid "Gamification"
-msgstr ""
+msgstr "Παιχνιδοποίηση"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -10381,7 +10387,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_kanban_gauge
 msgid "Gauge Widget for Kanban"
-msgstr ""
+msgstr "Γραφικό Στοιχείο Μετρητή για Kanban"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_rule_form
@@ -10693,7 +10699,7 @@ msgstr "Haiti"
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_scanner
 msgid "Hardware Driver for Barcode Scanners"
-msgstr ""
+msgstr "Πρόγραμμα οδήγησης υλικού για σαρωτές Barcode"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_blackbox_be
@@ -11356,22 +11362,22 @@ msgstr "Εισαγωγές / Εξαγωγές"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_import_camt
 msgid "Import CAMT Bank Statement"
-msgstr ""
+msgstr "Εισαγωγή CAMT Τραπεζικής Δήλωσης"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_import_csv
 msgid "Import CSV Bank Statement"
-msgstr ""
+msgstr "Εισαγωγή CSV Τραπεζικής Δήλωσης"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_import_ofx
 msgid "Import OFX Bank Statement"
-msgstr ""
+msgstr "Εισαγωγή OFX Τραπεζικής Δήλωσης"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_import_qif
 msgid "Import QIF Bank Statement"
-msgstr ""
+msgstr "Εισαγωγή QIF Τραπεζικής Δήλωσης"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_base_import_language
@@ -11400,7 +11406,7 @@ msgstr "Ανενεργή"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_search
 msgid "Inactive Users"
-msgstr ""
+msgstr "Ανενεργοί Χρήστες"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_wkf_activity_in_transitions
@@ -11636,7 +11642,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_search
 msgid "Internal Users"
-msgstr ""
+msgstr "Εσωτερικοί Χρήστες"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
@@ -11755,7 +11761,7 @@ msgstr "Αποθήκη"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock
 msgid "Inventory Management"
-msgstr ""
+msgstr "Διαχείριση Αποθεμάτων"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_account
@@ -12540,17 +12546,17 @@ msgstr "Αρχεία καταγραφής"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_loyalty
 msgid "Loyalty Program"
-msgstr ""
+msgstr "Πρόγραμμα αφοσίωσης"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_loyalty
 msgid "Loyalty Program for the Point of Sale "
-msgstr ""
+msgstr "Πρόγραμμα αφοσίωσης για την Εντατική Λιανική"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_lunch
 msgid "Lunch"
-msgstr ""
+msgstr "Γεύμα"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_lunch
@@ -12647,7 +12653,7 @@ msgstr "Προγραμματιστής"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_maintenance
 msgid "Maintenance - MRP"
-msgstr ""
+msgstr "Συντήρηση - MRP"
 
 #. module: base
 #: model:res.country,name:base.mw
@@ -13708,7 +13714,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_settings_dashboard
 msgid "Odoo Settings Dashboard"
-msgstr ""
+msgstr "Ταμπλό Ρυθμίσεων Odoo"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_voip
@@ -13728,6 +13734,9 @@ msgid ""
 "                a customer: discussions, history of business opportunities,\n"
 "                documents, etc."
 msgstr ""
+"Το Odoo σας βοηθά να παρακολουθείτε εύκολα όλες τις δραστηριότητες που σχετίζονται με\n"
+"έναν πελάτη: συζητήσεις,ιστορία των επιχειρηματικών ευκαιριών,\n"
+"έγγραφα, κλπ."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_supplier_form
@@ -13736,6 +13745,8 @@ msgid ""
 "                a supplier: discussions, history of purchases,\n"
 "                documents, etc."
 msgstr ""
+"Το Odoo σας βοηθά να παρακολουθείτε εύκολα όλες τις δραστηριότητες που "
+"σχετίζονται με έναν προμηθευτή: συζητήσεις, ιστορικό αγορών, έγγραφα κλπ."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_sequence_padding
@@ -13820,7 +13831,7 @@ msgstr "Εκδηλώσεις OnLine"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_hr_recruitment
 msgid "Online Jobs"
-msgstr ""
+msgstr "Online Θέσεις Εργασίας"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_quote
@@ -13955,7 +13966,7 @@ msgstr "Άλλο"
 #: model:ir.module.category,name:base.module_category_extra
 #: model:ir.ui.view,arch_db:base.user_groups_view
 msgid "Other Extra Rights"
-msgstr ""
+msgstr "Άλλα Πρόσθετα Δικαιώματα"
 
 #. module: base
 #: selection:ir.module.module,license:0
@@ -14640,7 +14651,7 @@ msgstr "Πρότυπο Email Προϊόντος"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_plm
 msgid "Product Lifecycle Management (PLM)"
-msgstr ""
+msgstr "Διαχείριση Ζωής Προϊόντος (PLM)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_extended
@@ -14805,7 +14816,7 @@ msgstr "Αιτήσεις Αγορών"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase_mrp
 msgid "Purchase and MRP Management"
-msgstr ""
+msgstr "Διαχείριση Αγορών και MRP"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_purchase_management
@@ -14862,13 +14873,13 @@ msgstr "Έλεγχος Ποιότητας"
 #. module: base
 #: model:ir.module.module,summary:base.module_quality_mrp
 msgid "Quality Management with MRP"
-msgstr ""
+msgstr "Διαχείριση Ποιότητας με MRP"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_event_questions
 #: model:ir.module.module,shortdesc:base.module_website_event_questions
 msgid "Questions on Events"
-msgstr ""
+msgstr "Ερωτήσεις για Εκδηλώσεις"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_web_settings_dashboard
@@ -15053,7 +15064,7 @@ msgstr "Εγγραφή "
 #: model:ir.actions.act_window,name:base.res_request_link-act
 #: model:ir.ui.menu,name:base.menu_res_request_link_act
 msgid "Referenceable Models"
-msgstr ""
+msgstr "Αναφερόμενα Μοντέλα"
 
 #. module: base
 #: code:addons/base/res/res_company.py:219
@@ -15733,6 +15744,8 @@ msgid ""
 "Selecting \"Blocking Message\" will throw an exception with the message and "
 "block the flow. The Message has to be written in the next field."
 msgstr ""
+"Εάν επιλέξετε την \"Προειδοποίηση\" θα ειδοποιήσει το χρήστη με το μήνυμα.\n"
+"Εάν επιλέξετε το \"Μήνυμα αποκλεισμού\" η διαδικασία θα διακοπεί και θα εμφανιστεί ένα μήνυμα. Γράψτε το μήνυμα στο επόμενο πεδίο."
 
 #. module: base
 #: selection:ir.property,type:0 selection:ir.translation,type:0
@@ -16508,7 +16521,7 @@ msgstr "Έρευνα CRM"
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_recruitment_survey
 msgid "Surveys"
-msgstr ""
+msgstr "Έρευνες"
 
 #. module: base
 #: model:res.country,name:base.sj
@@ -16803,6 +16816,12 @@ msgstr "Ταιλάνδη _ Λογιστική"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_th_reports
 msgid "Thailand - Accounting Reports"
+msgstr ""
+
+#. module: base
+#: code:addons/base/res/res_users.py:288
+#, python-format
+msgid "The \"App Switcher\" action cannot be selected as home action."
 msgstr ""
 
 #. module: base
@@ -17514,7 +17533,7 @@ msgstr "Οθόνη Επαφής για Καταστήματα"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_tour
 msgid "Tours"
-msgstr ""
+msgstr "Περιηγήσεις"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_event
@@ -18448,7 +18467,7 @@ msgstr "Αποθήκη"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_barcode
 msgid "Warehouse Management Barcode Scanning"
-msgstr ""
+msgstr "Διαχείριση Αποθήκης Σκανάρισμα Barcode"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_picking_wave
@@ -19308,12 +19327,12 @@ msgstr "Ηλεκτρονικό Εμπόριο"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_delivery
 msgid "eCommerce Delivery"
-msgstr ""
+msgstr "Παράδοση για Ηλεκτρονικό Εμπόριο"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_options
 msgid "eCommerce Optional Products"
-msgstr ""
+msgstr "Προαιρετικά είδη eshop"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_simple_form
@@ -19740,7 +19759,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_impex
 msgid "test-import-export"
-msgstr ""
+msgstr "δοκιμή-εισαγωγή-εξαγωγή"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_inherit

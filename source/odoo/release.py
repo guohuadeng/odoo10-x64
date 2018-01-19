@@ -35,4 +35,4 @@ author_email = 'info@odoo.com'
 license = 'LGPL-3'
 
 nt_service_name = "odoo-server-" + series
-version += '-20171107' 
+version += '-20180117' 
