@@ -2,7 +2,8 @@
 # http://www.jetbrains.com/pycharm/webhelp/project.html
 .idea
 .iml
-/file
+/odoofile
+/z
 /app-odoo-paid
 odoo.conf
 rf.bat

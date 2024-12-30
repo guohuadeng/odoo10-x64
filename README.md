@@ -28,8 +28,10 @@ extra 依赖文件目录，如果要自行安装涉及到的库，其它如果�
 ###先装pip
 python extra/get-pip.py
 SET PATH=%CD%\runtime\pgsql\bin;%CD%\runtime\python;%CD%\runtime\python\scripts;%CD%\runtime\win32\wkhtmltopdf;%CD%\runtime\win32\nodejs;%CD%\source;%PATH%
-pip install -r source/requirements.txt
+pip2 install -r requirements.txt
 pip install -r source/requirements.txt -i https://mirrors.aliyuncs.com/pypi/simple
+
+sudo chmod -R 755 /usr/lib/python2.7/dist-packages/odoo/addons
 
 ### 如果遇到报错缺vc库，请安装
 /extra/VCForPython27.msi
